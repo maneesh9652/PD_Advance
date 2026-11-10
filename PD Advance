@@ -1050,6 +1050,7 @@ report_constraints -all_violators -max_transition -significant_digits 3 -nosplit
  get_lib_cell *Nand2*_LVT  | and change drive strength
  #if not work change Vt flovar
  size_cell $a Nand2X4_Hvt
+ source ./scripts/upsizeriver
 
  2.Inserting Buffer
 
@@ -1057,6 +1058,7 @@ report_constraints -all_violators -max_transition -significant_digits 3 -nosplit
  insert_buffer $a NBUFFX8_HVT
  legalize_placement -cells cellname
  legalize_placement -increment
+
 
  
 
