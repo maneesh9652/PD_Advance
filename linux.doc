@@ -1,0 +1,592 @@
+
+	1)what is linux?
+	2)history of linux?
+	3)benfits of linux
+	4)different linux distributions
+	5)installing and manging software in linux.
+	6)linux security and user management advance topics
+	7)file commands.
+introduction:
+	=>installing cygwin to window user.
+	=>for linux/unix and mac users no need to install the cygwin.
+			|
+		go to the openterninal and they can start and run the run commands.
+	=>cygwin is a simulator where windows os user can feel like he/she is working on linux.
+	Q)why we need to learn the linux commands??
+	A)we can go for the multitasking operation.
+	  we can reduce the task time by maximizing the productivity of the work.
+	 Q)what is the reason that we are preferred for linux than other operating systems??
+	 1)open source:
+	 		as an open source operating system,linux allows users to view and modify the source code,which means that it is more transparent and customizable.
+	2)security:
+			linux is generally considered to be more secure when compared to other operating systems,particular for servers.
+			it is less vulnerable to virsues and other types of malware,it can easily configured to ensure the security of system.
+	3)stability:
+		linux is known for stabilty which makes it a good choice for the servers.
+	4)performance:
+			linux is generally fast and more efficent when compared to other operating systems.
+	5)cost:
+		linux is free to use which makes it an attractive option for individual and organization for budget friendly
+	6)community support:
+			there is a large community of users and developers who contribute to the development of linux and provide support to the user.
+	Q)what is operating system definition??
+	Def:
+		an operating system is a collection of software that manages computer hardware resources and provides common services for computer programs.
+		an operating system performs the following functions:
+			1)resource management
+			2)memory management
+			3)process management
+			4)security management
+			5)communication management
+			6)input or output control management.
+		eg:
+			microsoft windows,mac, linux,....etc
+		Q)what is a linux??
+		A)=>free and opensource operating system.
+			=>it is created in 1991 by "linus torvolds".
+			=>it is completely based on the unix operating systems.
+			=>it is widely used on servers,super computers & personal computers.
+HISTORY OF LINUX:
+	=>linux was initially developed with a project "hobby project" by linus
+	=>linus was a student of university name "helsinki".
+	=>he realsed the first version of linux version named as "0.02"version in 1991.
+	BENIFITS OF LINUX:
+		=>free and opensource to the user.
+		=>it is stable.
+		=>highly customizable.
+		=>it has larger users then also it produces support for the users.
+		=>it is secured.
+
+DIFFERENT TYPES OF LINUX DISTRIBUTIONS:
+	1)UBUNTU:
+		=>a user friendly distribution that popularly done with begineers.
+	2)FEDORA:
+		=>it is produced by redhat,it will be fully focused on the latest software and technologies.
+	3)MINT:	
+		=>ditribution that is based on ubuntu,and it isdesigned to be easy for use.
+	4)Cent0S:
+		=>it is the distribution of redhat,it is used for the design enterprise.
+LINUX FILE SYSTEM:
+	LINUX FILE system is organised into a hiearchy with the root directory on the top
+	some subdirectories that we use in linux for the typesof files.
+		/etc => system configuration files.
+		/usr =>user programs and libraries.
+		/home =>user home directories.
+LINUX COMMAND LINE:
+	=>the linux command line is a powerful tool that allows user to perform task and manipulate the system by typing commands.
+=>GUI =>Graphical user interface
+	=>it is an alternative to using GUI and it is often preferredby advance users.
+
+TEXT EDITORS IN LINUX:
+	it is used for creating or modifying the text files.
+	EG:
+		vi,emacs,nano
+
+INSTALLING AND MANAGING SOFTWARE IN LINUX:
+	in linux software is typically installed with packages,managers=> specialized program that can handle,installation,updates and removal of software.
+ADVANCED TOPICS:
+	1)shell scripting
+	2)system administration
+	3)kernel customization
+
+basic commands of linux:
+1)for increasing the font size in cygwin =>cntrl+
+2)for decreasing the font size in cygwin =>cntrl-
+3)pwd ->present/current working directory
+4)clear ->clear the terminal
+5)exit ->exits the terminal
+6)cd ->change the directory
+7)ls =>getting list of folders in the path
+8)
+
+WINDOWS:
+	C:\Users\deepi\OneDrive\Desktop\New folder
+LINUX:
+	cd /cygdrive/C/Users/deepi/OneDrive/Desktop/'New folder'
+
+
+os vs Linux :
+os---> folders
+linux---> directories.(dir)
+
+linux commands:
+pwd ---> present working directory
+clear ---> it is going to clear the linux terminal.
+tab:
+1 time press the tab : ---> it will do auto fill.
+2 time press the tab :  it prints all the dir details 
+----------change dircetory--------
+cd--> change directory.
+cd --> root directory.
+cd ../ ---> change dir to 1 step backword.
+cd ../../ ---> change dir to 2 step backword.
+cd ../../../ ---> change dir to 3 step backword.
+
+---------- make dir-------------
+mkdir ---> make the dir.
+mkdir {1..10}_dir ----> to create multiple dir at one time.
+
+------- rmove------------------
+rm -rf 10_dir/ --->used to remove a directocy which is not an empty.
+rm -r dir_name ---> to delete dir.
+rm -i filename ---> it is goning ask permisiion.
+rmdir ---> remove empty directory.
+
+example1: create a empty in desktop dir by the vlsi_guru by using mkdir command.
+note: your current dir is  root dir
+
+
+example2: create an empty dir in the N 	drive by the name vlsiguru, using mkdir command.
+note: your current dir is root dir.
+
+----------------touch---------
+ touch floorplan.txt -----> create a text file.
+  touch plan{1..5}.ext ---> create multiple files.
+  touch -a filename.ext ----> access a file.
+  touch -m filename.ext  ---> modify a file timestap
+  stat filename.ext ---> shows all status of file.
+-----------------------------
+list
+----------
+
+ls ---> shows contents of the dir.
+ls -l --> list contents of current dir in long form.
+ls -s  ---> list the contents and size of the files of current dir.
+ls -sh ---> list the size in readable form.
+ls -lh --->list in long form and readable.
+ls -ltr ---> long list, time, reverse order.
+ls -i   ----> gives the unique id of each file in current dir.
+ls -p  ----> path of the files in the dir.
+ls -d */ ----> shows only dir & not files.
+ls -n  ----> numeric user id & group id
+--------
+----------------------------------------------------
+PERMISSIONS:
+u --> user
+g --> group
+o --> other
+
+r---> read  100 --4 	r__
+w---> write 010 --2		 _w_
+x---> execute 001--1 	__x
+
+
+1) numeric method:
+111 -(7) ----> read, write, execute.
+101 -(5) ----> read and execute.
+110 -(6) ----> read and write.
+
+
+chmod 777 dir_name.
+ chmod 777 filename.
+ chmod 775 dir_name
+
+2) symobolic methods:
+
++  --> add permission
+-  --> remove the permiossion.
+
+chmod u+wx,g-wx,o+rw dir_name.
+ chmod u-rx,g-wx,o+rw filename.
+ example: 
+ create a dir with name vlsiguru, first give all permissions by using numerical method. 
+ note : you are in root dir
+
+rwxrwxrwx ---->r_x,_wx,rw_   ----> by using symbolic method.
+
+alias
+-------------
+go to root dir.
+		cd 
+type ---> gvim .bashrc
+		alias 'c= clear'
+		:wd
+in root dir source bashrc file
+		source .bashrc
+---------------------------------------------------
+cat
+-------
+cat--> display the conentet of the file.
+	-cat filename.txt
+cat -b filename.txt ---- add the line num to non blank lines.
+cat > filename.txt  ---- '>' this redirects and open the file for edit.
+cat -n filename.txt ---- add the line num to all the lines.
+cat >> filename.txt  --- '>>' this redirects and edit without overwriting the previous date of the file.
+cat file1 > file2 ---- this redirects the contents of file1 to file2.
+---------------
+copy
+------
+cp --->{source file to destination file}
+cp sum1 sum2 -----> sum1 is copied in sum2
+cp -r dir1 dir2 ---> copy dir1 inside dir2
+cp -r dir1 new_dir ---> i will create a new dir and copy inside that dir.
+cp -ri dir1 dir2 --->it will ask permisiion to overwrite or not.  
+
+---------
+move
+---------
+mv source file destination file.
+mv dir1 dir2
+mv jink jink2 ----> if jink2 is not exist then it will create it and mv data
+
+note:
+1) mv command we can give single source file to single destination file.
+2) we can move multiple files to single directory (but the dir should exist)
+3) we can move single dir to single dir (its not compulsary that destination dir sould exists.
+4) we can move multiple dir to single dir (but destination dir should exist).
+
+
+meta character/wildcard character
+
+it is used in file regular expressions.
+it is used for pattern detection.
+
+* --->it will show all the file /dir
+?---->signle character
+[] ---> anything in betwwn the range [a-z] [A-Z][0-9]
+\ ----> ignore the special meaning 
+		ex: \? 
+{} --->it is used for multiple patterns, this characters used in regular expressions for pttern matching.
+
+examples:
+1) list out file which is haveing name 3 charcaters only but end with at least 2 numbers with any extention.
+ ls [a-z][0-9][0-9].*
+ 		or
+ ls ?[0-9][0-9].*
+ 
+ 2) list out all the names which starts with d and ends with s with any extention?
+		ls d*s.*
+3) list all the names with 2 characters with .txt extention ?
+	ls ??.txt
+4) list out all the names which start with a or m or c with any extention?
+	ls [amc]*.*
+
+5) list out all the names with lower case with any extention?
+	ls [a-z]*.*
+
+----------------------------
+Miscellance Commands:
+
+ls ----> list all the file and dir.
+pwd ---> present working dir
+head ---> display the top 10 lines of the file.(head -6 file name)
+Tail ---> display the bottom 10 lines of the file.
+Tac --->  display the lines in reverse order.
+More ---> similar to cat command.we can display lorge content like small parts.
+Less ---> we can disply small content.
+Id ----> display the ID of the user (or) group.
+Ping ---> check the network connectivity, status of networks/servers.
+Hostname- --> disply the owner name.
+Kill --> it is used for manually terminating the process.
+Who -->disply the user name.
+Date ---> disply date current date and time.
+Cal ---> displays current month and year.
+
+
+
+File compare commands:
+
+cmp: ---> compare two files byte by byte.
+diff: ---> allows you to compare two files line by line. 
+
+wc:---->used to find out number of lines, words count, byte and characters count in the files specified in the file arguments.
+	wc -l: ---> print no of lines(wc filename)
+	wc -w: ---> print no of words
+	wc -c: ---> print no of bytes.
+
+comm: --->compare two sorted files line by line
+
+		ex: comm m.txt m1.txt 
+	comm m.txt m1.txt
+                a
+                b
+                c
+        E
+	comm: file 2 is not in sorted order
+	f
+	comm: input is not in sorted order
+note: then save the sorted file and execute.
+		sort m1.txt -o m1.txt
+		comm m.txt m1.txt
+
+
+	
+sort: ---> sort lines of text files.
+
+find
+--------
+Find :---->it is used to search files and dir recursively.
+	-name
+	-type
+	-time
+	-permissions
+
+find [path] [options] [actions]
+
+path --> where to search
+options ---> conditions ( name, type)
+actions ---> what to do (print, delete, execute)
+
+ 	find ./ -type d -empty ---> to get empty dir
+	find ./ -type f -empty  ----> to get empty files.
+	find ./ "*" -type f ---> extract the files in the current dir.
+	find ./ "*" -type d  ----> extact the dir.
+	find ./ -name "x2.tcl" -type f  --> whether file is there or not.
+	find /cygdrive/c/Users/mogut/OneDrive/Desktop/* -type f------> getting all the file present inside that dir by using path.
+ find . -type f -mtime +1 -mtime -3  ----> it will extract files created in between 1-3 days.
+find . -type f -ctime +1
+find . -type f -mmin +1
+	'-n' -->less than n (recent)
+	'+n' --> more than n (older)
+	'n'  --> extacly n 
+
+ --
+ finding empty files in current dir
+ 	
+find ./ -type f -empty
+	find ./ -type f -size 0
+
+finding the files by permiossions
+	find ./ -perm 777
+
+
+
+	---------------------------
+
+	piping
+
+	--> Using piping multiple comamands works together.
+	--> we can use piping vertical bar ( | )
+
+	ex: command1 --> output ---> command2 ---> final output
+
+
+	xargs ---> its used to give as a standard input/ arguments to the commands .
+
+			seq 100 | xargs -i mkdir {}
+					---> creates 100 empty dir.
+			seq 100 | xargs -i rmdir {}
+					---> remove all empty files.
+
+			seq 100 | head -10 | xargs -i rmdir {}
+			----> to remove 1-10 dir.
+                        ls | wc -l filename
+                        ls ----> show the files
+                        |-----> pipe(input-output | input output)
+                        wc ----> word count
+                        -l ----> show lines
+
+
+	tee command:
+	In between the pipeing if we use '>' symbol it will break the pipeing.
+
+		example: ls -l > output | wc
+
+	use tee | tee concept
+		ls -l | tee |wc
+	example:
+ 		ls -l |tee file1.txt | wc file1.txt
+                ls -l |tee file1.txt | tee file2.txt | wc -l
+	
+---------------------------------------------------
+local variable
+a = 10;
+
+global variable
+
+What are environmental variables?
+	Environmental variables are used to store information about the environment in which a program runs, such as paths to files and dir, user preferences and system settings.
+ 
+
+ printenv  ----> Display all the Environment variables.
+ echo ---> to print the content into the screen.
+ echo $SHELL
+ echo $USER
+ echo $HOSTNAME
+ 
+
+Promtscript: here we are using PS1
+
+  export PS1="\t"
+  export PS1="\d"
+  export PS1="\u"
+  export PS1="\h"
+  export PS1="\#"
+  export PS1="\w"
+  export PS1="\W"
+
+
+-----
+pushd and popd
+ These are used to pushd and popd the directories in a dir stack.
+	this will works on the principle of FILO or LIFO.
+  pushd /cygdrive/c
+  popd
+
+
+how to check the disk space/usage?
+du --->display only a total for each argument.
+du -s ---> disk usage with summary
+du -sh --> disk usage with human readable format.
+
+
+
+
+-----------
+
+Filter commands:
+
+grep ---> global regular expression print / pattern.
+	 ex:  grep "LINUX" new.txt (it only gives matched sentance)
+
+	-n ---> to get line numbers.
+	-i ---> ignore the case.
+	-v --->invert the match.
+	-w --> exact match
+	-l --> display the file name.,
+	-h ---> only display the search line without filename.
+	-o ---> only disply the searched word.
+	-c ---> to disply the no of times the pattern is present.
+	-$ ---> search at the end of the text input.
+				ex: grep "linux$" new.txt
+			
+	-^ ---> search at the begining of t6he text input.\
+				ex:	grep "^unix" new.txt
+	
+
+ grep "linux" new.txt  1.txt
+new.txt:this is linux class
+new.txt:today we are discussing about grep command in linux
+new.txt:linux is easy
+new.txt:linux is similar to unix
+1.txt:linux is easy
+
+---------------------------------------------------------------
+data manupulations:
+
+SED: --> sed command in linux stands for stream editor and it can perform lots of functions like searching, find and replace, insertion or deletion.
+synax:
+	sed options [SCRIPT] []Filename]
+	
+SEARCH AND REPLACE
+
+	ex:
+		 sed 's/linux/unix/g' new.txt -----> it wii do replace all occurence of linux with unix.
+	
+	 sed '1s/linux/unix/g' new.txt  --> to change first occurence of linux replace with unix.
+
+
+
+--- replace second and more occurence of word linux with unix.
+ 		sed '2,$s/linux/unix/g' new.txt
+	
+--->replace only 2nd of the word linux with unix in second line to 4th line.
+
+		 sed '2,4 s/linux/unix/g' new.txt
+
+DELETE LINES:
+
+--> To delete 2nd line 
+ 	sed '2d' new.txt
+
+---> To delete 2nd and 3rd line
+	sed '2,3 d' new.txt
+
+---> To delete last line
+	 sed '$ d' new.txt
+ sed '$ d' new.txt
+
+---> To delete all lines starting with tab
+ 	sed '/^\t/d' new.txt
+
+---> To delete the lines ends with (.)
+		sed '/\.$/d' new.txt
+-----------------------------
+ADDING A LINE BEFORE AND AFTER A SEARCHED PATTERN
+---
+--> add a line after word linux occurs
+	sed '/linux/a "This is the new line after word linux" ' new.txt
+--> add a line before word linux occurs
+	 sed '/linux/i "This is the new line before word linux" ' m.txt
+	
+-------
+PRINTING LINES
+
+--> To display 2nd to 4th line
+	 sed -n '2,4 p' new.txt
+---> Start  from line 2 and print every second line.
+	sed -n '2~2 p' new.txt
+---> to print from line 2 every 2nd line in between the range.
+	sed -n '1,6 {2~2p}' new.txt
+
+
+---------
+MERGING 2 OR MORE LINES	
+
+---> start from 4th line and merge 2 lines 
+	
+	 sed '4N; s/\n/ /g' new.txt
+----> to merge more than 2 lines
+ sed '2{N; N; N; s/\n/ /g;}' new.txt
+---->
+sed '2N; 3N; 4N; s/\n/ /g' new.txt
+
+
+
+Important notations in sed command:
+
+	-N ---> add next line to pattern space immediatly.
+	-g ---> global
+	- -i --> (option): in file editing
+	-p ---> display the contents
+	-d ---> delete the pattern space
+	-a ---> inserting a line after the searched pattern
+	 i ---> inserting a line before the searched pattern.
+
+---------------------------------------------------------------------
+
+AWK COMMAND:
+
+	It is used for database manipulation command. It enables a programmer to write tiny effective in the form of statements.
+
+
+to print all the content of the file
+	 ls -l | awk '{print $0}'
+to print only last index of the file
+ ls -l | awk '{print $NF}'
+
+Imaportant notations:
+
+	-$0  	: indicate complete line
+	-$1  	: indicate 1st word in the line
+	-$NF 	: indicates last word/column in a line
+	-$NF-1	: incicates second last word / column in a line
+
+
+example:
+EMP_ID Name Domain Location Salary
+101 Ram PD hyd 50000
+102 Ravi STA bangalore 75000
+103 Kumar DV HYD 70000
+104 Teja DFT bangalore 60000
+105 Anil STA HYD 50000
+106 mani PNR bangalore 60000
+
+--> to get id and name 
+ awk '{print $1,$2}' awk.txt
+
+---> to get all sta engineer name, location and salary
+ awk '$3 == "STA" {print $2,$4,$5}' awk.txt
+
+
+%! grep "maneesh"
+
+
+
+
+
+
+
+
+
+

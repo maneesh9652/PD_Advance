@@ -1,0 +1,428 @@
+Q1. Tell me about yourself.
+
+“Good morning, sir/madam. My name is Sanniboina Maneesh. I am an Electronics and Communication Engineering graduate from PBR Visvodaya Institute of Technology and Science, Kavali, with a CGPA of 8.2.
+I have completed Physical Design training at VLSIGURU, Hyderabad, where I worked on a 28nm block-level ASIC physical design project.
+I have hands-on experience with the RTL-to-GDSII flow, including floorplanning, power planning, placement, clock tree synthesis, routing, timing analysis, and physical verification. I have worked with Synopsys ICC2, PrimeTime, Design Compiler, Tcl, and Linux.
+In my project, I worked on congestion reduction, power planning, timing closure, and post-route DRC fixes. I am looking for an entry-level Physical Design Engineer position where I can apply my knowledge and continue learning.”
+
+Q2. Explain your professional summary.
+
+“My professional summary highlights my ECE background, practical training in ASIC physical design, and knowledge of the complete RTL-to-GDSII implementation flow. It also describes the tools I have used and the main areas I worked on in my 28nm block-level project.”
+
+Q3. What do you mean by RTL-to-GDSII?
+
+“RTL-to-GDSII is the complete ASIC(Application specific integrated circuit) implementation process that converts a behavioral hardware description into a physical layout ready for fabrication.
+The main stages are RTL design, synthesis, floorplanning, power planning, placement, CTS, routing, timing analysis, physical verification, and final GDSII(Graphical database system II) generation.”
+
+Q4. What was your role in the 28nm physical design project?
+
+“My project was a block-level ASIC physical design implementation using Synopsys ICC2 and PrimeTime. I worked on floorplanning, power planning, placement, CTS, routing, timing analysis, and physical verification. I also studied congestion reduction, IR drop analysis, and post-route DRC fixing.”
+
+Q5. What are the specifications of your project?
+
+“My project used a 28nm technology. The design had approximately 52.47K instances, 40 macros, and 8 clocks. The reported operating frequency was 424.78 MHz. I would explain each figure based on the actual design reports.”
+Frequency is getting from lower time period inverse.
+ 1.How did you get the instance count?
+   lib-->block-->sizeof_collection[get_flat_cells]
+
+
+ 2.What is the difference between a standard cell and a macro?
+ “A standard cell is a small, pre-designed logic element, such as a NAND gate, inverter, flip-flop, or buffer. A macro is a larger, pre-designed functional block, such as SRAM(Static Random Access Memory) store data when power is supplied, ROM(Read only memory) data stored even of no power.
+
+ 3.Why does the design have eight clocks?
+  My design has eight clocks because different parts of the design may operate using different clock signals. These clocks can include the master clock, generated clocks, and clocks for different functional blocks.
+
+ 4.How did you calculate or verify the frequency?
+ The clock which has less time period is taken for getting frequency in MHZs. F=1/t
+F=1000/2.3 -->424.78MHZ
+
+ 5.What was the final setup slack and hold slack?
+ Setup slack checks whether data arrives before the required setup time, while hold slack checks whether data remains stable for the required hold time. 
+
+Q6. Which EDA tools have you used?
+
+“I have used Synopsys ICC2 for physical design implementation, PrimeTime for static timing analysis, and Design Compiler for synthesis-related work. I have also used Tcl scripting and Linux commands to execute scripts and analyze reports.”
+
+Q7. What is floorplanning?
+
+“Floorplanning is the initial physical design stage where we define the core and die area, arrange macros, plan the locations of ports, and consider placement space and routing resources. A good floorplan helps reduce congestion and supports timing and power optimization.”
+
+Q8. What is power planning, and why is it important?
+
+“Power planning creates the power distribution network that delivers VDD and VSS to standard cells and macros. It typically uses power rings, straps, and rails. The objective is to provide reliable power while controlling IR drop and electromigration.”
+
+
+Q9. What is CTS? What are clock skew and latency?
+
+“Clock Tree Synthesis builds a clock distribution network to deliver the clock to sequential elements.
+- Clock latency: Time taken for the clock to reach a clock pin from its reference point.
+- Clock skew: Difference in clock arrival times between two sequential elements.
+CTS aims to control skew and latency while meeting transition, capacitance, and timing requirements.”
+
+Q10. How did you reduce congestion?
+
+“I analyzed congestion reports and identified congested regions. Possible corrective actions include improving floorplan space, adjusting macro placement, using placement blockages appropriately, optimizing cell placement, and reducing routing demand in critical regions.
+
+Q11. How did you achieve timing closure?
+
+“I used PrimeTime timing reports to identify critical paths and setup or hold violations. Depending on the violation, corrective actions can include cell resizing, buffering, placement optimization, and routing changes. I then rechecked timing to verify whether the constraints were satisfied.”
+
+Q13. Your resume says IR drop was reduced to 5%. Explain it.
+
+
+
+
+Q14. What is the difference between DRC and LVS?
+
+“DRC checks whether the physical layout follows manufacturing design rules, such as spacing and width requirements. LVS compares the extracted layout connectivity with the reference netlist to verify that the physical implementation matches the intended circuit.”
+
+
+
+
+###################################################
+Technical Skills
+--------------------
+
+Q1. What is ASIC Physical Design?
+ASIC Physical Design is the process of converting a synthesized netlist into a physical layout by performing floorplanning, placement, clock tree synthesis, routing, and timing optimization.
+
+Q5. What is the difference between core area and die area?
+Die area is the total chip area, while core area is the region inside the die reserved for the main design implementation.
+
+Q8. What is congestion?
+Congestion occurs when the routing demand in a region exceeds the available routing resources. It can be reduced by improving placement, adjusting utilization, moving macros, or optimizing the routing.
+
+Q9. What is timing closure?
+Timing closure is the process of resolving timing violations and meeting the required timing constraints across the specified operating conditions.
+
+Q10. What is a placement blockage?
+A placement blockage restricts or prevents cell placement in a specified region. It can be hard, soft, or partial, depending on its rules.
+
+Q12. What are power rings, straps, and rails?
+Power rings distribute power around the core or macros, straps carry power across the design, and rails distribute power locally to standard-cell power pins.
+
+Q14. What is electromigration?
+Electromigration is the movement of metal atoms caused by high current density. It can damage interconnects and reduce chip reliability.
+
+Q16. What is global placement?
+Global placement distributes standard cells across the core while optimizing objectives such as wirelength, congestion, and timing. Cells may not yet be legally placed.
+
+Q17. What is detailed placement?
+Detailed placement legalizes cell locations and aligns cells to placement rows while maintaining design rules and placement constraints.
+
+Q18. What is cell resizing?
+Cell resizing replaces a cell with a different drive-strength version to improve timing or reduce power, subject to design constraints.
+
+Q19. Why are buffers inserted?
+Buffers are inserted to improve signal transition, drive high fanout, reduce excessive net delay, or help meet timing constraints.
+
+Q20. What are placement sanity checks?
+They include checking placement legality, overlaps, utilization, congestion, macro locations, high-fanout nets, and timing status.
+
+Q25. Why do we perform timing analysis after CTS?
+CTS changes the clock network and introduces actual clock insertion delays and skew. Timing analysis checks whether setup and hold requirements are satisfied with the updated clock paths.
+
+Q26. What is STA?
+Static Timing Analysis verifies whether signal paths meet timing requirements without simulating every possible input sequence.
+
+Q29. What is slack?
+Slack is the difference between the required arrival time and the actual arrival time
+
+Q30. What is a critical path?
+A critical path is a path with the worst timing margin among the paths being analyzed. It often determines the maximum achievable clock frequency.
+
+Q31. How do you fix a setup violation?
+Depending on the cause, I can upsize cells, insert buffers where appropriate, reduce logic depth, improve placement, or optimize routing to reduce maximum path delay.
+
+Q32. How do you fix a hold violation?
+Hold violations can be fixed by adding delay to the data path, often using delay buffers, or by making other timing-aware implementation changes. The fix must also preserve setup timing.
+
+Q33. What is clock uncertainty?
+It is the thing that setup AND hold timing not meeting the timing requirements.
+skew,margin,clock jitter.
+
+Q34. What is OCV?
+On-Chip Variation
+
+Q35. What is CRPR?
+
+
+Q38. What is an antenna violation?
+An antenna violation occurs when a conductor collects charge during fabrication and may damage a transistor gate oxide. Antenna diodes or routing changes can help resolve it.
+
+Q39. What is an ECO?
+An Engineering Change Order is a controlled design modification used to correct or improve a design, such as fixing timing, connectivity, or functional issues.
+
+Q40. What is post-route optimization?
+
+
+Q41. What is ICC2?
+Synopsys IC Compiler II is used for digital implementation, including floorplanning, placement, CTS, routing, and optimization.
+version - 
+
+Q42. What is Design Compiler?
+It synthesizes RTL into a gate-level netlist using technology libraries and design constraints.
+
+Q43. What is PrimeTime?
+It performs static timing analysis to verify timing constraints and identify violations.
+
+Q44.What is Innovus?
+Cadence Innovus is a digital implementation tool used for floorplanning, placement, CTS, routing, and optimization.
+
+
+#############################################
+
+Q1. Explain your Physical Design project.
+
+“My project is Block-Level Physical Design Implementation using Synopsys ICC2 and PrimeTime in 28nm technology. I worked on the physical design flow, including floorplanning, power planning, placement, clock tree synthesis, routing, timing analysis, and physical verification. I also used Tcl scripting and Linux commands to execute and analyze the design flow.”
+
+Q2. What are the specifications of your project?
+
+Parameter	Project detail
+Technology node	28nm   -->we used NDM files of saed32 so 32 refers to 28/32 nm technology
+Instance count	52.47K -->Total cell count
+Frequency	424.78 MHz
+Macros	40
+Clocks	8
+Tools	ICC2, PrimeTime, Design Compiler
+
+Q4. What is the role of Synopsys ICC2?
+
+ICC2 is a physical implementation tool used to perform floorplanning, placement, CTS, routing, optimization, and other physical design tasks.
+
+Q5. What is the role of PrimeTime?
+
+PrimeTime is used for Static Timing Analysis (STA). It analyzes timing paths, setup and hold checks, slack, and timing violations using timing constraints and cell/interconnect delays.
+
+Q6. What is the difference between Design Compiler and ICC2?
+
+Design Compiler synthesizes RTL into a gate-level netlist. ICC2 uses the netlist and physical design information to implement the design and generate the physical layout.
+
+Q7. What is floorplanning?
+
+Floorplanning is the first major physical design step. It defines the core and die area, places macros, considers I/O pins and blockages, and prepares the design for power planning and placement.
+
+
+Q12. You mentioned reducing IR drop to 5%. How did you achieve it?
+
+“I analyzed the power integrity results to identify areas with high voltage drop. I would examine power-grid connectivity, metal resistance, via connections, and current distribution, then improve the power network and rerun the analysis to verify the result.”
+Be ready to explain the actual before-and-after values from your reports. Do not claim a specific improvement method unless you performed it.
+
+
+Q13. What is EMIR analysis?
+
+EMIR analysis checks electromigration and IR drop. Electromigration evaluates the risk of metal damage caused by high current density, while IR-drop analysis checks voltage loss in the power network.
+
+
+Q15. What checks do you perform after floorplanning and power planning?
+
+I check floorplan geometry, macro placement, utilization, placement blockages, power-grid connectivity, power-pin connections, and relevant design-rule or connectivity errors.
+
+Q16. What is placement?
+
+Placement assigns physical locations to standard cells inside the core. It aims to achieve legal placement while improving timing, congestion, and power-related objectives.
+
+Q18. How did you reduce congestion in your project?
+
+“I analyzed congested regions and considered placement density, macro locations, blockages, and routing demand. I then used suitable placement and optimization strategies to improve routability.”
+Only describe the strategies you actually used in ICC2.
+
+
+Q19. What is the difference between global placement and detailed placement?
+
+Global placement distributes cells and optimizes placement objectives, sometimes allowing temporary overlaps. Detailed placement legalizes the cells and aligns them to valid placement sites and rows.
+
+
+Q20. What is a placement blockage?
+
+A placement blockage restricts or prevents standard-cell placement in a specified region. It can protect macro areas, preserve routing space, or reserve space for other design requirements.
+
+
+Q21. What is CTS?
+
+Clock Tree Synthesis builds the clock distribution network from the clock source to sequential elements. It inserts clock buffers or inverters to control clock skew, latency, transition time, and clock-tree power.
+
+
+Q24. What is the difference between Classic CTS and CCD?
+
+Classic CTS builds the clock tree according to the specified clock constraints and optimization objectives. Concurrent Clock and Data optimization considers clock and data paths together and may adjust clock timing, including useful skew, to improve overall timing. The exact implementation depends on the tool version and flow settings.
+
+
+Q25. What is the difference between setup and hold effects after CTS?
+
+Changes in clock arrival times can improve setup timing but worsen hold timing, or vice versa. Therefore, both setup and hold checks must be performed after CTS.
+
+
+Q26. What is routing?
+
+Routing connects cells and macros according to the netlist. Global routing estimates routing paths and resource usage, while detailed routing creates the actual metal and via connections while satisfying routing rules.
+
+
+Q27. What is DRC?
+
+Design Rule Checking verifies whether the layout follows manufacturing rules, including spacing, width, enclosure, and via-related requirements.
+
+
+Q28. You mentioned fixing post-route DRC violations. How did you approach them?
+
+“I reviewed the DRC reports to identify the violating locations and nets. I then investigated the routing geometry and used appropriate rerouting or physical optimization before rerunning DRC to verify the corrections.”
+
+
+Q29. What is LVS?
+
+Layout Versus Schematic compares the connectivity extracted from the physical layout against the reference netlist. It checks whether the implemented layout has matching connectivity.
+
+
+Q30. What is post-route optimization?
+
+Post-route optimization improves timing and other design objectives using actual or estimated routed interconnect parasitics. It may involve cell resizing, buffering, and routing changes.
+
+
+Q34. How do you fix setup violations?
+
+I inspect the critical timing path and identify whether the delay comes from cells, interconnect, fanout, or clock timing. Depending on the cause, I may optimize cell sizing, placement, buffering, or routing, then rerun STA.
+
+Q35. How do you fix hold violations?
+
+I identify the hold-violating paths and add suitable data-path delay, commonly through delay buffers or other tool-driven optimization. I then rerun hold and setup analysis to ensure both checks pass.
+
+
+Q37. What is a timing exception?
+
+A timing exception changes how the timing tool analyzes a particular path. Examples include false-path and multicycle-path constraints. Exceptions must reflect the real design behavior and should not be used simply to hide timing violations.
+
+
+Q38. What are OCV and CRPR?
+
+- OCV: On-Chip Variation models variations in cell and interconnect delays across the design.
+- CRPR: Clock Reconvergence Pessimism Removal removes certain pessimistic differences in delay calculations for shared portions of launch and capture clock paths.It remove unwanted delay.First setup delay 7,after crpr 4.
+
+
+1.What CRPR.?
+
+CRPR stands for Clock Reconvergence Pessimism Removal. It removes pessimism introduced by OCV when launch and capture
+
+Q39. What is PVT?
+
+PVT stands for Process, Voltage, and Temperature. These conditions affect cell and interconnect behavior, so timing must be checked under the required operating corners.
+
+
+Q40. How do you check setup and hold slack in PrimeTime?
+Answer:
+I use timing reports to examine maximum-delay paths for setup and minimum-delay paths for hold. I review the startpoint, endpoint, arrival time, required time, and slack.
+
+
+Question	What you should prepare
+
+Q43. What are the 40 macros?	Actual macro types and names
+Q44. What are the 8 clocks?	Actual clock names and whether they are primary or generated
+Q45. What was your final setup slack?	Final setup timing report
+Q46. What was your final hold slack?	Final hold timing report
+Q47. What was your worst IR drop before and after optimization?	Actual EMIR reports
+Q48. How many DRC violations remained at the end?	Final DRC summary
+Q49. Did you achieve timing closure at all required corners?	Final timing reports for required modes and corners
+Q50. What was your personal contribution to the project?	Tasks you actually performed independently
+
+
+###########################################
+
+Certification
+------------------
+Q1. Which certification or training have you completed?
+
+I completed Physical Design training at VLSIGURU Institute, where I learned the ASIC RTL-to-GDSII implementation flow and gained hands-on exposure to Physical Design tools.
+
+
+Q2. What topics did you learn during your Physical Design training?
+
+I learned floorplanning, power planning, placement, Clock Tree Synthesis, routing, Static Timing Analysis, and physical verification.
+
+
+Q3. Why did you choose Physical Design?
+
+I am interested in understanding how a synthesized digital design is converted into a physical chip layout. Physical Design combines digital design knowledge, timing analysis, and layout optimization.
+
+
+Q4. What is the difference between training and industry experience?
+
+Training helps me learn concepts and practice design flows in a guided environment. Industry experience involves working on real project requirements, collaborating with teams, and meeting product quality and delivery goals.
+
+
+Q5. Explain your Multi-Voltage Physical Design project.
+
+My project focused on implementing a block-level ASIC Physical Design flow. I worked on stages such as floorplanning, power planning, placement, CTS, routing, and timing analysis. I also studied how voltage areas and power distribution are handled in a multi-voltage design.
+
+
+Q6. What is a multi-voltage design?
+Answer: A multi-voltage design uses different supply voltages for different regions of a chip. It can reduce power consumption by allowing suitable blocks to operate at lower voltages.
+
+
+Q7. What challenges can occur in multi-voltage Physical Design?
+
+Challenges include power-domain definition, voltage-area placement, power-grid connectivity, level-shifter insertion, isolation requirements, and timing closure across voltage domains.
+
+
+Q8. What is a voltage area?
+
+A voltage area is a defined physical region associated with a particular voltage domain or set of placement and power requirements. It helps control where cells belonging to that domain can be placed.
+
+
+Q9. What is the difference between power planning and placement?
+
+Power planning creates the power distribution network to deliver VDD and VSS. Placement assigns physical locations to standard cells while considering timing, congestion, and placement constraints.
+
+
+Q10. What did you learn from your project?
+
+I learned how the major Physical Design stages are connected. I also learned to analyze tool reports, identify implementation issues, and understand how placement, routing, power integrity, and timing affect one another.
+
+
+Q11. Which EDA tools have you used?
+
+I have hands-on exposure to Synopsys ICC2, PrimeTime, and Design Compiler.
+
+
+Q12. What is the purpose of each tool?
+
+Tool	Main purpose
+Design Compiler	RTL synthesis
+ICC2	Physical implementation
+PrimeTime	Static Timing Analysis
+
+
+Q13. What is the difference between synthesis and Physical Design?
+
+Synthesis converts RTL into a gate-level netlist using logic optimization and technology mapping. Physical Design implements that netlist physically by placing cells, building clock and power networks, routing nets, and optimizing the design.
+
+
+Q14. What would you do if an ICC2 command failed?
+
+I would read the error message, inspect the relevant log, check the command syntax and design prerequisites, and correct the issue before rerunning the command.
+
+
+Q15. What are your strengths?
+
+My strengths are problem-solving, willingness to learn, and time management. When I encounter a technical issue, I try to understand the cause, check the relevant reports, and work toward a solution.
+
+
+Q16. Why should we hire you as a fresher?
+
+I have completed Physical Design training and understand the basic ASIC implementation flow. I am willing to learn, improve my technical skills, and contribute to the team while developing my practical industry knowledge.
+
+
+Q17. How do you handle a difficult technical problem?
+
+I first understand the problem, collect the relevant information, and analyze the possible causes. Then I test a solution and verify the result instead of assuming the issue is fixed.
+
+
+Q18. Are you a team player?
+
+Yes. I believe teamwork involves sharing information, listening to others, communicating clearly, and working together to achieve project goals.
+
+Q19. How do you manage your time?
+
+I prioritize tasks based on importance and deadlines. I divide larger tasks into smaller steps and check my progress regularly.
+
+Q20. What is one skill you want to improve?
+
+I want to improve my technical communication and deepen my understanding of Physical Design tools. I am working on explaining technical concepts clearly and practicing tool commands and reports.

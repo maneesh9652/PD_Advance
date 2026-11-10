@@ -1,0 +1,2820 @@
+tclsh filename --> to run script
+
+1. how to go to the directory where we want to run the files
+
+ 		2 ways 
+
+			--cd F:/
+
+			--cd <complete path>
+
+2. How to develop TCL files
+
+--> TCL files can be developed using GUIM text editor or any other text editor
+
+--> TCL files can be developed in multiple ways, by using different text editors
+
+	--> o GUIM
+	-->o Notepad++
+	-->o we can even develop in Cygwin window
+
+3. text editor is a way of developing the tcl files.
+############################
+Over view of TCL 
+Tkl is a interpreted high level language
+interpretor---> means line by line.
+c and c++ ---> compiler language ---> it excecute entire code with one go.
+
+Overview of TCL: TCL stands for Tool Command Language. It is an open-source, high-level, and interpreted scripting language. It was created by John Ousterhout in 1988 and is now maintained by the TCL community. TCL is known for its simple syntax, making it easy to learn and use, and its ability to integrate with other languages and systems.
+
+Simple Syntax: TCL's, L's syntax is very simple, making it easy to learn and use. It "It uses a combination of commands, variables, and control structures to perform tasks. It does not have a strict syntax like other languages, which makes it more flexible and easier to use.
+
+Applications: TCL is used in a wide range of applications, including embedded systems, network management, and system administration. It is also used in the development of graphical user interfaces (GUIs) and automation of interactive programs. TCL can be used to automate repetitive tasks, create custom tools, and create scripts that can be run on a variety of platforms.
+
+-------------
+Variables and Data Types: TCL has a simple and flexible variable handling system. It supports different data types such as integers, floating-point numbers, strings, lists, and arrays. TCL also has a built-in type conversion function, which makes it easy to convert between different data types.
+
+Control Structures: TCL has a variety of control structures, such as loops and conditionals, that can be used to control the flow of a program. TCL also supports the use of procedures, which can be used to group commands together and make a script more organized and readable.
+
+Regular Expressions: TCL supports regular expressions, which are used to match patterns in strings. This is useful for tasks such as validation, data extraction, and text manipulation. TCL's regular expression support is based on the POSIX standard, which means it is compatible with regular expressions used in other languages and tools.
+
+Object-Oriented Programming: TCL supports object-oriented programming. which allows for the creation of custom data types and the use of inheritance and encapsulation. This makes it easier to create complex and modular programs.
+
+---------------
+Built-in functions: TCL has a wide range of built-in functions that can be used for various tasks, such as file system operations, network I/O, and string manipulation. These functions make it easy to perform common tasks and can be used to create more advanced scripts.
+
+Frameworks and Libraries: TCL can be extended using various libraries and frameworks, such as TK for GUI development, Expect for automating interactive programs, and TCLX for providing additional utility commands. These libraries and frameworks can be used to add functionality to TCL and make it more powerful.
+
+Real-world examples: TCL is used in a wide range of real-world applications. For
+
+example, in the field of network management, TCL scripts can be used to automate the configuration of network devices. TCL is also used in the field of embedded systems, where it can be used to create custom scripts for controlling and monitoring devices.
+
+
+
+
+#########################################3
+1. How to write a tcl program ?
+first line what we need to indicate is:
+
+#! what is this in cygwin ?
+
+In Cygwin, #! (called shebang or hashbang) is a special sequence of characters that appears at the beginning of a script file and is used to specify the interpreter that should be used to execute the script.
+
+For example, if you have a Tcl script named "myscript.tcl" and you want to execute it using the Tcl interpreter, you can add the following shebang line at the top of the file:
+
+#!/usr/bin/tclsh
+
+
+#!--->shebang or hashbang
+why?
+it is used to call the interpreater.
+--->nest for shebang we need to give the path where the interpreter is there.
+		#!/usr/bin/tclsh
+
+syntax: it is the combinations of the commands.which we have already used in linux.
+common syntax for tcl:
+		command--->followed by the arguments.
+
+here: argument may be the command,it may be variable,may be value.
+for ex:
+		set a 10
+-->here we are assigning value 10 to the a variable--- it is kind of arguments.
+----------------------------------------------------------------------------------------
+***first we will write a program for python then come to tcl.
+#####python program####
+
+						#!/usr/bin/python
+						a = 10
+						print("a=",a)
+
+*output== a=10.
+
+#########tcl prgm
+		set a 10
+			puts "a=$a" 	  ---->>$a means it prints the content of the "a".
+this  tcl also arrgument followed by the commands
+tcl is a commands followed by the arguments (arguments may be commands or variables).
+------------------------------------------------------------------------------------------
+the another way to run a tcl program without writing a shebang at the starting.
+--> for that go to linux and go to same directory where the file is there and give the interpretor, followed by the file name.
+============>tclsh <filename>
+
+it is same for the python also.
+if the file .txt extention also it will execute the progrm.
+-------------
+If you want to update the path then we have to use .bashrc file. we have like --->alias,setting shortcuts like that we have the option for that.
+		gvim ~/.bashrc ---> alias = set what shortcut you want.
+		source .bashrc  ---> after setting the alias we have to save that and we need to source the bashrc file to activare that shortcut.
+
+----------------------
+$---> this symobol indicates bash shell in linux.
+%---> this is for tclsh.
+% info commands --> this will give the info of the cammands,
+exit----> command to come out from the tclsh shell.
+
+In tcl why data type is not require to represent?
+-->In Tcl, data types do not need to be explicitly declared or represented because Tcl uses dynamic typing. Dynamic typing means that the type of a value is determined at runtime based on the context in which it is used.
+
+-->Tcl, a variable can hold any type of data, such as a number, a string, a list, or even a command. When you assign a value to a variable, Tcl automatically determines the type of the value and assigns it to the variable.
+
+
+what is the use of $ in tcl ?
+
+In Tcl, the $ sign is used to access the value of a variable. When you use the $ sign followed by the name of a variable, Tcl substitutes the value of the variable in place of the variable reference.
+
+For example, consider the following code:
+
+set x 10
+puts $x.
+
+----------
+what is the use of [] {} () in tcl ?
+
+In Tcl, the symbols (), {}, and () have different uses:
+
+[]: The square brackets [] are used to execute a command and substitute its result as a value. For example:
+
+set a 5
+
+set b 10
+
+set c [expr {$a + $b}]
+
+In this example, the expr command is executed within the square brackets, and the result of the expression (which is square brackets, and the result of the expression (which is 15) is substituted as the value of the variable c.
+--
+
+{}: The curly braces {} are used to define a literal value, such as a string or a list, that should not be evaluated. For example:
+ex:
+set mystring {This is a string with {nested braces} and $variables}
+
+ruts $mystring
+
+In this example, the entire string is enclosed within curly braces, so the contents are not evaluated. This means that the variable $variables is not substituted with its value, and any braces inside the string are treated as literal characters.
+
+(): The parentheses () are used to group expressions and to control the order of evaluation. For example:
+
+set a 5
+
+set b 10
+
+set c [expr ($a + $b) * 2}]
+
+
+In this example, the expressions inside the parentheses are evaluated first, so the result of ($a + $b) is multiplied by 2. If the parentheses were not used, the expression would be evaluated from left to right, and the result would be 50 instead of 60.
+
+
+
+ex: without paranthesis
+set m [expr {$a + $b *2}]
+puts $m
+output:50---> first it do mul and then adiition.
+
+ex:with paranthesis
+set m [expr {($a + $b) *2}]
+puts $m
+
+output:60---> first it do addition then mul.
+
+
+In this Tcl code, the variables a and b are assigned the integer values 5 and 10, respectively. The expr command is used to evaluate the expression $a + $b * 2 and store the result in the variable c.
+
+I The expression $a + $b * 2 is evaluated based on the order of precedence of the arithmetic operators, which in Tcl is:
+
+Parentheses
+Exponentiation
+Multiplication and division
+Addition and subtraction
+
+In this case, since the expression is enclosed in curly braces {},the entire expression is evaluated by expr as a single argument,so the order of evaluation is determined by the arithmetic operators.
+
+According to the order of precedence, the expression is evaluated as follows:
+
+$b * 2, which equals 20.
+$a + 20, which equals 25.
+
+therefore, the variable c is assigned the integer value 25.
+
+---------------------------------------
+
+set commands with examples:
+
+1. Assigning a value to a variable:
+set x 10
+
+2. Referencing a variable in a set command:
+
+set x 10
+
+set y [expr {$x * 2}]
+
+3. Concatenating variables and strings:
+	ex:
+		set name "John"
+		set message "Hello, $name!"
+		puts $message
+
+4. Using curly braces to avoid variable substitution:
+
+	set message "Hello, $name!"
+	puts $message
+output: Hello,John!
+
+
+	set message1 {Hello, $name!}
+	puts $message1
+output: Hello $name!---> becz of curly brases it is give like this.
+
+
+---> "#" is used to comment out single line.
+--->if you want to comment out the multiple lines in the tcl use 
+if {0} {
+	body of the code
+	}
+
+5. Using square brackets to execute a command and assign the result to a variable:
+
+	set result [expr (sqrt(5))]
+	puts $result
+-------------------------------------------------------------
+Puts command: used to print the output.
+
+		puts "Hello, world!"
+		puts "The answer is: 42"
+
+-------------------------------------------------------------
+
+Gets command: it used to give the input from the user,
+
+	puts "Enter your name:"
+	gets stdin name
+	puts "Hello, $name!"
+
+ex:	puts "enter the name"
+	gets stdin name    ---> here name is the variable.
+	puts "hello,$name"
+output:hello,mahesh.
+
+questions:
+
+ write a tcl program to add 2 num, user should provide the values.
+
+	puts "enter 1st num"
+	gets stdin x
+	puts "enter the 2nd value"
+	gets stdin y
+	set sum [expr $x + $y]
+	puts "the of 2 num is: $sum"
+
+----------
+puts command with escape characters:
+	puts "This is a newline. \nThis is the second line." ---> it will start new line after the line.
+	puts "This is a tab.\tThis is the second column." ---> it will give the one tab space.
+	puts "This is a double quote: \"" --->
+	puts "This is a backslash: \\"
+
+
+questions:
+if i want o/p= : a	b	c
+				 d	e	f
+				 g	h	i
+	puts a\tb\tc\nd\te\tf\ng\th\ti
+#to get ouput 
+			1
+		1		1
+	1				1
+puts \t\t1\n\t1\t\t1\n1\t\t\t\t1
+
+
+set name "John"
+
+puts "Hello, \$name! How are you today?"
+
+puts "The value of the variable \\name is: $name"
+
+Here are the escape characters that are commonly used in Tcl:
+	\n: represents a newline character
+	\t: represents a tab character
+	\": represents a double quote character
+	\': represents a single quote character
+	\\: represents a backslash character
+	\r: represents a carriage return character
+	\f: represents a form feed character
+	\b: represents a backspace character
+	\ooo: represents a character with the octal value ooo
+	\xhh: represents a character with the hexadecimal value hh
+
+
+Note that the backslash itself can be escaped with another backslash (\\), which is useful if you want to include a literal backslash in your output.
+
+In addition to the above escape characters, Tcl also provides a few special sequences that are not escape characters, but are treated specially by the interpreter:
+
+	\[: starts a command substitution \[
+	\]: ends a command substitution ]\
+	\{: starts a braced group
+	\}: ends a braced group
+
+These special sequences are used primarily in Tcl scripts and regular expressions.
+
+\n: represents a newline character
+
+Iputs "Line 1\nLine 2"
+
+# Output:
+
+# Line 1
+
+# Line 2
+
+\t: represents a tab character
+
+puts "Column 1\tColumn 2"
+
+
+# Output:
+
+# Column 1
+
+Column 2
+
+\": represents a double quote character
+
+puts "She said, \"Hello!\""
+
+# Output:
+
+# She said, "Hello!"
+
+\\: represents a backslash character puts "C:\\Program Files\\Tcl\\bin"
+
+# Output:
+
+# C:\Program Files\Tcl\bin
+
+\r: represents a carriage return character
+
+I
+
+puts "Line 1\rOverwritten"
+
+# Output:
+
+# Overwritten
+
+\f: represents a form feed character
+
+puts "Before\fAfter"
+
+# Output:
+
+# Before
+
+#
+
+(form feed)
+
+# After
+
+\b: represents a backspace character
+
+puts "abcdef\b\b\b123"
+
+# Output:
+
+# abc123
+
+\ooo: represents a character with the octal value ooo
+
+puts "\101"
+
+# Output:
+
+#A
+
+\xhh: represents a character with the hexadecimal value hh
+
+puts "\x41"
+
+# Output:
+
+\[: starts a command substitution
+
+set output [expr {2 + 2}]
+
+puts "The output of the expression is: $output"
+
+# Output:
+
+# The output of the expression is: 4
+
+\]: ends a command substitution
+
+set command "date"
+
+set output [exec[$command]
+
+puts "The current date is: $output"
+
+# Output:
+
+# The current date is: Sat Mar 27 12:30:00 CST 2023
+
+\{: starts a braced group
+
+set list {apple banana (cherry dates)}
+
+puts $list
+
+# Output:
+
+# apple banana {cherry dates}
+
+\}: ends a braced group
+
+set pattern {John\{Doe\}}
+
+set match [regexp {John\{Dof\}} $pattern]
+
+puts $match
+
+# Output:
+
+#1
+
+---------------------------------------
+TCL operators:
+1) Arithemetic operators:
+	Addition (+)
+	Subtraction(-)
+	Multiplication (*)
+	Division (/)[2/10=5] {5 output}
+	Modulus (%) [remiander]
+	Expontentation (**) [power 2**5]
+
+set a 10
+set b 3
+set c [expr $a + $b]
+puts $c
+set c [expr $a - $b]
+puts $c
+set c [expr $a / $b]
+puts $c
+set c [expr $a % $b]
+puts $c
+set c [expr $a * $b]
+puts $c
+
+
+
+2) Comparision Operators:
+Equal to (==)
+Not Equal to (!=)
+Greater Than (>)
+Less than (<)
+Greater than or equal to (>=)
+Less than or equal to (<=)
+
+
+set a 10
+set b 5
+
+#if {condition} {body of the condition}
+if {$a > $b} {
+puts "a is the biggest num"
+}
+
+
+
+
+
+Recap:
+set: 
+puts:
+gets
+[],(),{}
+expr:
+add [expr 10+20]
+if {condition} {body of the if}
+arthimetic operators
++-/*
+caomparison:
+== !=, >= <=, > <
+
+---------------------------------------------------------------
+
+set a 10
+set b 3
+if {$a > $b} {
+puts "a is biggest number"
+} else {
+puts "b is biggest number"
+}
+
+set a 10
+set b 3
+if {$a == $b} {
+puts "a equals to b"
+} else {
+puts "a not equals to b"
+}
+set a 10
+set b 3
+if {$a > $b} {
+puts "a is biggest number"
+} elseif {$a < $b} {
+puts "b is biggest number"
+} else {
+puts "both are equal"
+}
+
+set a 10
+set b 80
+
+if {$a != $b} {
+puts "a is not equal to b"
+} else {
+puts "a is equal to b"
+}
+
+3) Logical operators:
+
+AND (&&)
+OR (||)
+NOT (!)
+
+
+
+AND (&&)
+
+set a false 
+set b false 
+if {$a && $b} {
+puts "thyhe output is true"
+} else {
+puts "the output is false"
+}
+
+
+
+OR (||)
+puts "enter a value"
+gets stdin a
+puts "enter the value of b"
+gets stdin b
+if {$a || $b} {
+puts "thyhe output is true"
+} else {
+puts "the output is false"
+}
+
+
+NOT (!)
+set a 1
+if {!$a} {
+puts "the ouput is 1"
+} else {
+puts "the output is 0"
+}
+
+
+4) Bitewise Operators:
+	Bitwise AND (&)
+	Bitwise OR  (|)
+	Bitewise XOR (^)
+	Bitwise NOT (~)
+	Left shift (<<)
+	Right shift  (>>)
+
+
+bitewise AND:
+
+set a 6
+set b 3
+
+set c [expr $a & $b]
+puts $c
+
+6 ----> 110
+3-----> 011
+---------------
+2     	010
+
+set a 6
+set b 3
+
+set c [expr $a & $b]
+puts $c
+
+
+set a 6
+set b 3
+set c [expr $a | $b]
+puts $c
+
+set a 6
+set b 3
+
+set c [expr $a ^ $b]
+puts $c
+
+set m 6
+set n [expr ~$m]
+puts $n
+
+set a 6
+set b [expr $a >> 1]
+puts $b
+00000011 << 2
+= 00001100
+
+
+
+set a 6
+set b [expr $a << 1]
+puts $b
+          
+
+6 ---> 0110--->0011---3
+6 ----> 0110 ---< 1100 ---12
+
+-------------------------------
+Control statement in the TCL:
+
+	if statement:
+
+		syntax: if {condition} {body of the condition}
+
+## if statement condition syntax if you have 3 conditions:
+
+		syntax: if {condition} {
+			body of the condition
+			} elseif {condition for elseif} {
+			body of the elseif cindition
+			} else {
+			body of else
+			}
+
+example: write a tcl program for comparing between the 2 numbers. using if statement
+
+		puts "enter 1st num"
+		gets stdin a
+		puts "enter 2nd num"
+		gets stdin b
+		if {$a > $b} {
+		puts "a is greater than b"
+		} elseif {$a < $b} {
+		puts "b is greater than a"
+		} else {
+		puts "a is eaual to b"
+		}
+
+-----
+	for loop:
+	
+synatx: for {initilization} {condition} {incr/decr} {
+body of the for loop
+}
+
+		for {set i 0} {$i <= 50} {incr i 2} {
+		puts $i
+		}
+
+
+example1: write a pgm to print all the odd numbers from 1 to 100.
+
+for {set a 1} {$a <=100} {incr a 2} {
+puts $a
+}
+
+
+example2: write a pgm to print all even num from 1 to 100.
+for {set a 1} {$a <=100} {incr a } {
+	if {$a % 2 == 0} {
+puts $a
+}
+}
+
+example3:write a tcl prm to print the numbers from 1 to 100 which is divisible by 4.
+
+for {set a 1} {$a <=100} {incr a } {
+if {$a % 4 == 0} {
+puts $a
+}
+}
+
+
+example4: write a tcl prm to print the num from 1 to 100 which is divisible by 4 and also divisble by 6.
+for {set a 1} {$a <=100} {incr a } {
+if {$a % 4 == 0 && $a % 6 ==0} {
+puts $a
+}
+}
+
+
+example5: write a tcl prm to print all the prime numbers from 2 to 100.
+
+for {set i 2} {$i <= 100} {incr i} {
+set isprime 1
+for {set a 2} {$a < $i} {incr a} {
+	if {$i % $a == 0} {
+	set isprime 0
+	break
+	}
+}
+if {$isprime} {
+puts $i
+}
+}
+
+
+Recap:
+
+control statements:
+	if :
+	if {condition} {body of if}
+
+	if {condition} {
+	body of if
+	} elseif {condition} {
+	body of elseif
+	} else {
+	body of else
+	}
+
+for loop:
+syntax: for {initialization} {condition} {incr / dcr} {
+body of for 
+}
+
+-----------------------
+break :--> stop the iteration or termination of the loop.
+example7: write a tcl prm to print all the numbers from 1 to 100. and break when its in 70's.
+
+
+for {set a 1} {$a <= 100} {incr a 1} {
+
+if {$a / 10 == 7} {
+break
+}
+puts $a
+}
+
+
+continue : -->skip current iteration and continue.
+
+example 8: write a tcl prm to print all the num from 1 to 100 and skip whn it is in 70's
+
+for {set a 1} {$a <= 100} {incr a 1} {
+
+if {$a / 10 == 7} {
+continue
+}
+puts $a
+}
+
+
+
+example9 : write a tcl program to print all the numbers from 1 to 100. which is divisible by 4 and stop when its in 70's.
+
+for {set a 1} {$a <= 100} {incr a 1} {
+if {$a % 4 == 0 } {
+	if {$a / 10 == 7} {
+break
+}
+puts $a
+}
+}
+
+
+example10: write a tcl program to print all the numbers from 1 to 100. which is divisible by 6 and skip when its in 70's.
+
+for {set a 1} {$a <= 100} {incr a 1} {
+if {$a % 6 == 0 } {
+	if {$a / 10 == 7} {
+continue	
+}
+puts $a
+}
+}
+
+
+example 11:write tcl pgm to print all the num from 1 to 100 which is divisble by 4 and skip when its in 60's and stops when its in 90's.
+
+for {set a 1} {$a <= 100} {incr a 1} {
+if {$a % 4 == 0 } {
+	if {$a / 10 == 6} {
+continue	
+}
+if {$a / 10 == 9} {
+break
+}
+puts $a
+}
+}
+
+----- 
+while loop :
+
+synatx of the while loop:
+
+set i 0
+while {condition} {
+body of the while loop
+incr i
+}
+
+example 1: write a tcl program to print all the num from 1 to 100, using while loop
+
+set i 1
+while {$i <=100} {
+puts $i
+incr i
+}
+
+
+example 2: write a tcl pgm to print all the even numbers from 0 to 100. using while loop
+set i 0
+while {$i <= 100} {
+if {$i % 2 ==0} {
+puts $i
+}
+incr i
+}
+
+---or---
+set i 0
+while {$i <=100} {
+puts $i
+incr i 2
+}
+
+
+example 3: write a tcl program to print all the odd num from 1 to 100. using while loop
+
+set i 1
+while {$i <=100} {
+puts $i
+incr i 2
+}
+
+
+
+
+
+
+
+#################3 assignment #################3
+#example 4: write a tcl pgm to print all the odd num from 1 to 100. using while loop and skip when its in 60's.
+
+#example 5: write a tcl pgm to print all the odd num from 1 to 100. using while loop and skip when its in 60's and 80's .
+
+#example 6: write a tcl pgm to print all the even num from 1 to 100. using while loop and break when its in 60's.
+
+#example 7: write a tcl pgm to print all the even num from 1 to 100. using while loop and skip when its in 60's and 80's.
+#example 8: write a tcl pgm to print all the even num from 1 to 100. using while loop and skip when its in 60's and break when ir is in 90's.
+
+#example 9: write a tcl pgm to print all the even num from 1 to 100. using while loop which are divisible by 4  and skip when its in 60's and break when ir is in 90's.
+
+----
+switch statement
+
+syntax:
+
+switch $var {
+"case1" {
+puts "print case1"
+} 
+"case2" {
+puts "print case2"
+}
+"case3" {
+puts "print case3"
+}
+default {
+puts "default body"
+}
+}
+
+example 1:
+
+set a "banana"
+
+switch $a {
+"apple" {puts "apple is present"}
+"mango" {puts "mango is present"} 
+"banana" {puts "banana is present"}
+"default" {
+puts "no fruits present"
+}
+}
+
+-----
+
+
+
+foreach statement:
+	which is used to read each and every element of the list.
+
+syntax:
+foreach $var_list {
+body of the foreach
+}
+
+
+example1:
+
+set var_list {1 2 3 4 5 6 7}
+puts $var_list
+foreach a $var_list {
+puts $a
+}
+
+-----------------------------------------------------------------------------------
+What is a string in tcl?
+	String is sequence of the char.
+	in TCL string is enclosed double quotes ("")
+	string contains in TCL char,numbers, special char.
+
+How to define the string in the TCL?
+
+set a "this is tcl class"
+puts $a
+
+In TCL, we have some built in srting operators:
+
+1. string length:
+It is used to find the length of the string including spaces.
+
+example
+
+	set a "this is tcl class"
+	set b [string length $a ]
+		puts $a
+	puts "the lenth of the string is: $b"
+
+2. string reverse:
+It is used to reverse the string.
+Example:
+	set a "this is tcl class"
+	set b [string reverse $a ]
+	puts $a
+	puts $b
+
+3. string compare:
+Compares two strings lexicographically and returns -1 if the first string is less than the second. 0 if they are equal, and 1 if first string is greater than the second.
+
+example
+	set a "this is tcl class"
+	set c "this is tcl class"
+	set b [string compare $a $c ]
+	puts $b
+
+4. String index :
+	It is used to return the character at the index.
+example: 
+		set a "this is tcl class"
+		puts $a
+		set b [string index $a 15]
+		puts $b
+
+5. string range:
+It is used to access the consecutive characters in the string.
+
+example:
+		set a "this is tcl class"
+		puts $a
+		set b [string range $a 1 15]
+		puts $b
+
+example2:
+		set a "this is tcl class"
+		puts $a
+		set b [string range $a 1 end]
+		puts $b
+
+
+6. string tolower:
+It is used to convert the upper case into lower case:
+
+example:
+		set a "THIS IS TCL CLASS"
+		set b [string tolower $a]
+		puts $a
+		puts $b
+
+
+
+		set a "THIS IS TCL CLASS"
+		set b [string tolower $a 5 end ]
+		puts $a
+		puts $b
+
+7. string toupper:
+It is used to covert the lower case into upper case:
+example:
+		set a "this is tcl class"
+		set b [string toupper $a]
+		puts $a
+		puts $b
+
+		set a "this is tcl class"
+		set b [string toupper $a 5 end]
+		puts $a
+		puts $b
+
+8. String append:
+It is used to add / append the string at the end of the existing srting.
+
+example:
+		set a "this is tcl class"
+		puts $a
+		append a " tommo no tcl class"
+		puts $a
+
+
+9. String trim:
+It is used to remove spaces or specific characters at both ends of the string.
+
+example:
+		set a "   this is tcl class          "
+		puts $a
+		set b [string trim $a]
+		puts $b
+
+		set a "#####this is tcl class########"
+		puts $a
+		set b [string trim $a "#"]
+		puts $b
+
+		set a "$$$$ this is tcl class###"
+		puts $a
+		set b [string trim $a "# $ " ]
+		puts $b
+
+10. String trimleft:
+It is used to trims the left of the begining of the string.
+
+example:
+		set a "     this is tcl clas"
+		puts $a
+		set b [string trimleft $a]
+		puts $b
+
+		set a "this is tcl class"
+		puts $a
+		set b "this"
+		set c [string trimleft $a $b]
+		puts $c
+
+11. String trimright:
+
+It is used to trims the right of the begining of the string.
+
+example:
+		set a "this is tcl class     "
+		puts $a
+		set c [string trimright $a " as"]
+		puts $c
+	
+		set a "this is tcl class     "
+		puts $a
+		set c [string trimright $a]
+		puts $c
+
+12. String first:
+
+It will search for exact match occurences string 1 in string 2 and returns the number of the charcters before matching, if it is not found it return -1.
+
+example:
+		set a "hello world"
+		puts $a
+		set b [string first "world" $a]
+		puts $b
+
+		set a "hello world"
+		puts $a
+		set b [string first "l" $a 9 ]
+		puts $b
+
+
+13.string last:
+
+If we give any charector it will try to match that charector from last to the first of the string.
+
+It is used to find the last occurence of a substring with in a string.
+
+example:
+		set a "this is tcl class"
+		puts $a
+		set b [string last "l" $a]
+		puts $b
+
+
+		
+
+14. String wordstart:
+It is used to return the index numbers of the 1st charector of the word cantaning the index number wwhich we are given:	
+
+example:
+		set a "this is tcl class"
+		puts $a
+		set b [string wordstart $a 14]
+		puts $b
+
+		
+		set a "this is tcl class"
+		puts $a
+		set b [string wordstart $a 6 ]
+		puts $b
+
+
+15. String wordend:
+
+It is used to return the index of the last charactor index in tha word contaning the charactor:
+
+example:
+		set a "this is tcl class"
+		puts $a
+		set b [string wordend $a 12 ]
+		puts $b
+
+
+
+16. String equal:
+
+It is used to compare the two strings to determine if they are equal. if they are equal it returns 1 else returns as a 0.
+
+example:
+
+	set a "hello"
+		set b "hello"
+		set c [string equal $a $b]
+		puts $c
+
+		set a "hello"
+		set b "hello"
+		if {[string equal $a $b]} {
+		puts "two strings are equal "
+		} else {
+		puts "two strings are not equal"
+		}
+
+
+17. String is :
+It is used to test whether a given strings meets a certain criteria.
+
+		
+set a "HELLO"
+set b [string is alpha $a]
+puts $b
+
+if {[string is alpha $a]} {
+puts "$a contains only the alphabetic charector"
+} else {
+puts "$a does not contains only alphabetic charactors"
+}
+
+
+set a "12345"
+set b [string is digit $a]
+puts $b
+
+if {[string is digit $a]} {
+puts "$a contains only the digit charector"
+} else {
+puts "$a does not contains only digit charactors"
+}
+
+
+18. String match:
+
+It is used to perform pattern maching on the string.
+
+set a "hello world"
+puts $a
+set b [string match $a "world"]
+puts $b
+
+set a "hello world"
+puts $a
+if {[string match "hello world" $a]} {
+puts "$a pattern matched"
+} else {
+puts "$a pattern does not match "
+}
+ 
+
+19. String map:
+
+In Tcl, string map is a command is used to replace occurences of one or mpore substrings in a string with a specified replacement string. The basic syntax of string map is :
+
+set str "the quick brown fox jump over the lazy dog."
+set newstr [string map {quick fast brown red fox dog} $str]
+puts $newstr
+
+set str "the quick brown fox jump over the lazy dog."
+puts $str
+set newstr [string map {quick fast brown red fox dog} $str]
+puts $newstr
+set a [string map {" " "#"} $str]
+puts $a
+
+
+20. String replace:
+In tcl, string replace is a command that is used to replace a portion of a string with a specified replacement string.
+
+et str "the quick brown fox jump over the lazy dog."
+puts $str
+set newstr [string replace $str 4 8 "slow"]
+puts $newstr
+
+
+
+21. String cat :
+In Tcl, string cat is a command that concatenates one or more strings together into a single string.
+
+set a "good morning everyone"
+puts $a
+set b " this is tcl class"
+puts $b
+
+set c [string cat $a $b]
+puts $c
+
+
+
+22. String repeat:
+In Tcl, string repeat is a command that is used to repeat a string a specified number of times.
+
+
+set str "hello "
+set r_str [string repeat $str 5]
+puts $r_str
+
+
+
+23. String Join:
+
+In Tcl, string join is a command that is used to concatenate a list of strings into a single string, with a specified separator between each string.
+
+
+set a {maneesh moulali narendra}
+set c [join $a ","]
+puts $c
+
+
+24. String format:
+
+In Tcl, string format is a command that is used to create a formated string based on a format string and a list of values.
+
+
+set name "john"
+set age 30
+set height 5.8
+
+set format_str [format "Name: %s, Age: %d, Height: %.3f meters" $name $age $height]
+puts $format_str
+
+
+problems:
+example1: write a tcl prm to find the length of the string including spaces?
+
+set a "hello good morning"
+set b [string length $a]
+puts "the lenghth od the string is: $b"
+
+example2: write a  tcl pgm to find length of the string excluding spaces?
+set a "hello good  morning"
+
+set b [string length $a]
+puts "the lenghth of the string including spaces is: $b"
+
+set c [string map {" " ""} $a]
+set d [string length $c]
+puts "length of the string excluding the spaces is : $d"
+
+
+
+------------------------------------------------------------------------------
+LIST:
+
+In TCL, a list is a collection of values, typically strings or numbers, that are stored as a single value. Lists are represented as a series of elements separated by white space or brackets.
+
+
+set a {1 2 3 4 5 5}
+puts $a
+
+list in the TCL:
+list is collection of items or elements which are in orderd.
+list is a one of the basic data type in tcl.
+list contains elements of any type.
+list can allow to create a list in the list.
+
+
+how to create a list in tcl:
+
+set a "1 2 3 4"
+set a {1 2 3 4}
+set a [list 1 2 3 4]
+
+
+built in function of the list.
+1. 	llength
+2. 	lindex
+3. 	lrange
+4. 	linsert
+5. 	lreplace
+6. 	lassign
+7. 	lappend
+8. 	lset
+9. 	split
+10. concat
+
+11. lsort
+12. lsearch
+13. lmap
+
+
+
+1. llength
+
+it is used to find the length of the list.
+
+set a [list 1 2 3 4 5 6 6 7 8]
+puts $a
+set b [llength $a]
+puts "length of the list is: $b"
+
+
+2. lindex:
+it is used to access the element of the list.
+
+set a [list 1 2 3 4 5 6 6 7 8 hello]
+puts $a
+set b [lindex $a 9]
+puts $b
+
+set a [list [list 1 2 3 4 5 6 6 7 8] [list apple banana mango]]
+puts $a
+set b [lindex $a 0 1]
+puts $b
+
+3. lrange:
+It is uded to access the consecutive elements in the list.
+set a {1 2 34 56 3 4 5 67}
+set c [lrange $a 2 4]
+puts $c
+
+
+4. linsert:
+It is used to insert the element in the list
+
+set a {1 2 34 56 3 4 5 67}
+puts $a
+set c [linsert $a 0 hello good morning 80]
+puts $c
+set d [lindex $c 0]
+puts $d
+
+5. lreplace:
+It is used to replace the elements at particular element.
+
+set a "apple banana mango grapes"
+puts $a
+set b [lreplace $a 0 0 orenge] (0 0 range)
+puts $b
+
+6.lassign:
+It is used to assign the elements of the list into variables which we mentioned.
+
+set a [list red green white blue grey]
+puts $a
+lassign $a b c d e f 
+puts $b
+puts $c
+puts $d
+puts $e
+puts $f
+
+Recap:
+string vs list
+lindex : 
+llength
+append
+lrange
+linsert
+lreplace
+lassign : 
+
+
+---------------------------------
+7. lappend:
+It is used to add/append the element at the end of the existing list.
+set a [list 1 2 3 4 5 6]
+puts "list befor append: $a"
+lappend a 7 8 9 10
+puts "list after append: $a"
+
+8. lset:
+
+It is used to set elements at perticular index range.
+
+used to modify the elements in a list.
+it allows to change one or more elements in the list.
+which we need to modify the new value.
+
+syntax:
+
+set varname index value
+
+set a  [list 1 2 3 4 5 67]
+puts "before lset: $a"
+lset a 2 50
+puts "after lset : $a"
+
+
+set a  [list a b c d e]
+puts "before lset: $a"
+lset a 2 C
+puts "after lset : $a"
+
+
+9. split
+It is used to split the list.
+
+set a  [list red_green_blue]
+puts $a
+set b [llength $a]
+puts "length of the list before split: $b"
+
+set c [split $a "_"]
+puts $c
+set d [llength $c]
+puts "length of list after split: $d"
+
+10. concat:
+
+It is used to join the one or more list
+
+set a [list 1 2 3 4 5 6]
+puts $a
+set b [list 7 8 9 10 11 12]
+puts $b
+set c [concat $a $b]
+puts "after the concat: $c"
+
+
+11. lsort:
+It is used for set all the elements according to ASCII order.
+
+
+set a [list orange Apple BANANA]
+puts $a
+set b [lsort $a]
+puts "after the lsort: $b"
+
+12. lsearch
+
+the lsearch command is used to search for a specific element in a list and returns its index value.
+
+set a [list orange Apple banana]
+puts $a
+set b [lsearch $a  Apple]
+puts "index of apple is: $b"
+
+13. lmap
+
+The lmap command is used to apply a command or script to each element of a list and return a new list containing the results.
+
+
+set a [list mango orange Apple banana]
+puts $a
+set b [lmap c $a {string toupper $c}]
+puts $b
+
+lmap varName list body
+
+
+
+
+
+problems:
+
+1) write a tcl pgm to get the output as given below 
+
+
+set a {TCL DSD Linux Gvim Custum_layout PD Functional_verification DV DFT  }
+
+output:
+course 1 is : Custum_layout
+course 2 is : DFT
+
+solution:
+		set a { TCL DSD Linux Gvim Cstom_layout PD Functional_Verification DV DFT }
+		puts $a
+		set sortedList [lsort $a]
+		puts $sortedList
+		set i 1
+		foreach item $sortedList {
+		puts "course $i is: $item"
+		incr i
+		}
+
+
+What are the special variables in TCL?
+
+The special variables are predefined variables that hold the important information or values related to the TCL.
+
+
+1.number of arguments passing to the file/
+2. environment variables,
+3. version and patch level of TCL  being used, information about  the platform of TCL
+4. by running on special variables and information about most of recent TCL error.
+
+
+
+
+1.	argc ---> argument count 
+2.	argv --> it make a list of element which passing to the file.
+3.	argv0 ---> print thge file name
+4.	args---
+5.	env
+6.	tcl_interactive
+7.	tcl_platform
+8.	tcl_version
+9.	tcl_library
+10.	tcl_patchlevel
+11.	errorcode
+12.	errorinfo
+
+
+1.	$argc : this variable contains the number of command line arguments passed to a tcl sript
+
+puts $argc
+
+2. $argv  : this variable is an array that contains the command line arguments passed to tcl script. the first argument is stored in $argv(0), the second argument is stored in $argv(1)
+and so on.
+puts $argv
+
+3. $argv0  : it is used to print the script name.
+puts $argv0
+
+
+4.	$args 	: this variable is used to capture any additional arguments passed to a tcl procudure, that are not specified in the formal parameter list. 
+
+proc myproc {x1 x2 x3 args} {
+puts "x1 value is: $x1"
+puts "x2 value is: $x2"
+puts "args value is: $args"
+}
+
+myproc 10 20 3 4 5
+
+
+
+exapmle1: write a TCL program for addition of two numbers using special variables.
+
+puts $argc
+
+lassign $argv a b 
+
+set c [expr $a + $b]
+puts "addition of a and b is: $c"
+
+######### Assignment################
+
+  example2: write a tcl pgm for factorial of a num using special variables.
+
+
+
+
+
+recap:
+list operators:
+lappend
+lset
+lreplace
+lassign
+lmap
+lsort
+concat
+split
+lsearch
+
+special variables
+	argc ---> count of arguments
+	argv ---> assigning values to variables
+	argv0 ---> file name
+	args ---> multiple arguments 
+
+------------------------------------
+example2: write a tcl pgm for factorial of a num using special variables.
+
+lassign $argv a 
+set fact 1
+for {set i 1} {$i <= $a} {incr i} {
+
+set fact [expr {$fact * $i}] 
+}
+
+puts "the factorial of a num is : $fact"
+
+
+example 3: 
+calculate the area of the cell using special variables. passing coordinates and its values using special variables.
+
+puts "argument list : $argv"
+puts "count of the arguments: $argc"
+lassign $argv a b c d e f g h
+set area [expr ($d -$b)*($h - $f)]
+puts "area of the cell is: $area"
+
+
+example 4:
+
+1.calculate the area of the cell using special variables. passing coordinates and its values using special variables.
+2. if we pass the incorrect arguments:
+print error
+3. we need to check x2 > x1 and y2 > y1
+print the error.
+4. if we pass the coordinates in different order we have to cal area of the cell.
+5. all is correct, do the area calculation.
+
+solution: 
+puts "argument list : $argv"
+puts "count of the arguments: $argc"
+lassign $argv a b c d e f g h
+
+
+if {$argc != 8} {
+puts "Error: Insuffient arguments: The required arguments is 8"
+} elseif {$b > $d} {
+puts "Error: x1 is greater than x2"
+} elseif {$f > $h} {
+puts "Error: y1 is greater than y2"
+} else {
+
+# a		b 		c		d		e		f		g	h
+# x1	10		x2		40		y1		40		y2	60
+# 0		1		2		3		4		5		6	7
+for {set i 0} {$i <= $argc} {incr i 2} {
+switch [lindex $argv $i] {
+"x1" {set x1 [lindex $argv  $i+1]} 
+"x2" {set x2 [lindex $argv  $i+1]}
+"y1" {set y1 [lindex $argv  $i+1]}
+"y2" {set y2 [lindex $argv  $i+1]} 
+}
+}
+
+set area [expr ($x2 -$x1)*($y2 - $y1)]
+puts "area of the cell is: $area"
+}
+
+---------------------------------------------------------------------------------------------------
+FILE HANDLING OPERATIONS:
+
+File handling in tcl refers to the process of reading from and writing to files using tcl commands.
+Tcl provides a set of commands to open, read, write , and close files. The basic step for file handling in tcl are as follows:
+
+Open a file using the "open" command. This command takes two arguments: the name of the file to be opened mode and the mode in which the file should be opened (read,write, or append)
+
+set read [open "new.txt" r]
+
+Read from or write using the appropriate commands. the "gets" command is used to read a single line from a file, while the "read" command  be used to read a specific number of bytes. the "puts" command is used to write a string to a file.
+
+Close the file using the "close" command when finished.
+
+# how to read the single line of the file.
+set file [open ""file_name" r]
+set data [gets $file]
+puts $data
+
+# it reads the line by line of the file
+
+set a [open "program1.tcl" r]
+while {[gets $a line ] >= 0} {
+puts $line
+}
+close $a
+
+
+# read entire content of the file:
+set file [open "program1.tcl" r]
+set data [read $file]
+puts $data
+
+
+
+
+example2: write a tcl pgm for factorial of a num using special variables.
+
+lassign $argv a 
+set fact 1
+for {set i 1} {$i <= $a} {incr i} {
+
+set fact [expr {$fact * $i}] 
+}
+
+puts "the factorial of a num is : $fact"
+
+
+example 3: 
+calculate the area of the cell using special variables. passing coordinates and its values using special variables.
+
+puts "argument list : $argv"
+puts "count of the arguments: $argc"
+lassign $argv a b c d e f g h
+set area [expr ($d -$b)*($h - $f)]
+puts "area of the cell is: $area"
+
+
+example 4:
+
+1.calculate the area of the cell using special variables. passing coordinates and its values using special variables.
+2. if we pass the incorrect arguments:
+print error
+3. we need to check x2 > x1 and y2 > y1
+print the error.
+4. if we pass the coordinates in different order we have to cal area of the cell.
+5. all is correct, do the area calculation.
+
+solution: 
+puts "argument list : $argv"
+puts "count of the arguments: $argc"
+lassign $argv a b c d e f g h
+
+
+if {$argc != 8} {
+puts "Error: Insuffient arguments: The required arguments is 8"
+} elseif {$b > $d} {
+puts "Error: x1 is greater than x2"
+} elseif {$f > $h} {
+puts "Error: y1 is greater than y2"
+} else {
+
+# a		b 		c		d		e		f		g	h
+# x1	10		x2		40		y1		40		y2	60
+# 0		1		2		3		4		5		6	7
+for {set i 0} {$i <= $argc} {incr i 2} {
+switch [lindex $argv $i] {
+"x1" {set x1 [lindex $argv  $i+1]} 
+"x2" {set x2 [lindex $argv  $i+1]}
+"y1" {set y1 [lindex $argv  $i+1]}
+"y2" {set y2 [lindex $argv  $i+1]} 
+}
+}
+
+set area [expr ($x2 -$x1)*($y2 - $y1)]
+puts "area of the cell is: $area"
+}
+
+---------------------------------------------------------------------------------------------------
+FILE HANDLING OPERATIONS:
+
+File handling in tcl refers to the process of reading from and writing to files using tcl commands.
+Tcl provides a set of commands to open, read, write , and close files. The basic step for file handling in tcl are as follows:
+
+Open a file using the "open" command. This command takes two arguments: the name of the file to be opened mode and the mode in which the file should be opened (read,write, or append)
+
+set read [open "new.txt" r]
+
+Read from or write using the appropriate commands. the "gets" command is used to read a single line from a file, while the "read" command  be used to read a specific number of bytes. the "puts" command is used to write a string to a file.
+
+Close the file using the "close" command when finished.
+
+# how to read the single line of the file.
+set file [open ""file_name" r]
+set data [gets $file]
+puts $data
+
+# it reads the line by line of the file
+
+set a [open "program1.tcl" r]
+while {[gets $a line ] >= 0} {
+puts $line
+}
+close $a
+
+
+# read entire content of the file:
+set file [open "program1.tcl" r]
+set data [read $file]
+puts $data
+
+
+# read entire content of the file:
+set file [open "program1.tcl" r]
+set data [read $file]
+puts $data
+
+--
+write : w
+
+W: This mode opens th file for writing, but if the file is alredy exists, its content are truncated.(i.e, deleted). If the file is desent exit, a new file is created.
+
+set w [open "new.txt" w]
+puts $w "wlcome to vlsiguru"
+close $w
+
+---
+Append: 
+a: This mode opens the file for writing, but if the file already exists, new data is appended to the end of the file. If the file doesn't exist, a new file is created.
+
+
+set ap [open "example.txt" a]
+puts $ap "welcome to vlsiguru"
+close $ap
+
+
+r+----> This mode opens the file for reading and writing. starting at the begining of the file. 
+If file is doesn't exist, an error will show.
+
+set a [open "new.txt" r+]
+puts $a "hello"
+close $a
+
+
+
+w+ ---> This mode opens the file for reading and writing, but if the file alredy exists, it contents are truncated. (i.e, deleted). If the file doesn't exist, a  new file created.
+
+set a [open "new.txt" w+]
+puts $a "hello"
+close $a
+
+
+
+a+ ---> This mode opens the file for reading and writing, but if the file already exists, new data is appended to the end of the file. If file is does't exists a new file is created.
+
+
+
+set a [open "new.txt" a+]
+puts $a "hello"
+close $a
+
+-------------
+procedure:
+
+What is procedure in the tcl?
+
+it is similar to function or subroutine with respect to other prog language.
+
+What is procedure in the tcl?
+In TCL a procudure is a reusable code block that can be called multiple times with different inputs. It is similar to a function or subroutine in other programming languages.
+
+--->How to define the procedure in the TCL?
+synatx:
+
+proc proc_name {arguments} {
+body of the proc
+}
+
+proc_name
+
+1. write a proc without arguments:
+
+proc show {} {
+puts "hello world"
+}
+show
+
+or
+
+proc show {} {
+set a "hello world"
+puts $a
+}
+show
+
+2. write a proc with 2 arguments:
+
+proc add {x y} {
+set c [expr $x +$y]
+puts $c
+}
+add 10 20
+
+3. write a proc with 3 arguments addition:
+
+proc add {x y z} {
+set c [expr $x + $y + $z]
+puts $c
+}
+add 10 20 30
+
+4. write a proc with return keyword in the procedure?
+proc add {x1 x2} {
+set c [expr $x1 + $x2]
+return $c
+}
+puts [add 100 500]
+
+
+or 
+proc add {x1 x2} {
+set c [expr $x1 + $x2]
+#puts "hello world"
+return $c
+puts "hello world"
+
+}
+puts [add 100 500]
+
+5. write a proc for addition, sub, mul, div of two numbers.
+
+note:
+x1 ==0 and x2 =0 ---> addition
+x1 ==0 and x2 =1 ---> sub
+x1 ==1 and x2 =0 ---> mul
+x1 ==1 and x2 =1 ----> div
+
+solution:
+proc arith {x1 x2 a b} {
+if {$x1 == 0 && $x2 ==0} {
+set c [expr $a + $b]
+return $c
+} elseif {$x1 == 0 && $x2 ==1} {
+set c [expr $a - $b]
+return $c
+} elseif {$x1 == 1 && $x2 ==0} {
+set c [expr $a * $b]
+return $c
+} elseif {$x1 == 1 && $x2 ==1} {
+set c [expr $a / $b]
+return $c
+} else {
+puts "error"
+}
+}
+puts "addition of 2 num is:[ arith 0 0 10 20]"
+puts "sub of 2 num is:[ arith 0 1 10 20]"
+puts "mul of 2 num is:[ arith 1 0 10 20]"
+puts "div of 2 num is:[ arith 1 1 100 20]"
+
+
+
+6. write a tcl prg to print factorial of the number using proc?
+
+proc fac {a} {
+set b 1
+for {set i 1} {$i <= $a} {incr i} {
+set b [expr $i*$b]
+}
+return $b
+}
+puts [fac 5]
+
+ASSIGNMENT:
+7. write a tcl pgm to print all the prime numbers from 2 to 100 using proc:
+
+
+
+
+#################################Assignment ###########################
+example3:
+pass the line number as a argument, calculate the area of the particular line.
+
+example 4:
+pass the argument parameter of the cell name of the line. find the area of the cell using filehandling operations.
+
+example5: find the number of times 0.10 is present in the cell_info file.
+
+example :6
+
+based on inputs passed to as arguments. find the corresponding parameter value of each cell in the cell_info file usnig proc.
+
+example:7
+wtrite a tcl pgm to find the area of a cell, pass the file and cell name  as argument value using proc.
+
+example 8: 
+write a tcl pgm to find the area of the cell, pass the file and line number as argument values using proc.
+
+############################################
+
+example1: 
+Read the macro_area file and display all the lines and calculate the area of each cell using file handling operations.
+
+set file [open "macro_area" r]
+while {[gets $file line] >= 0} {
+#puts $line
+lassign $line a b c d e f g h i
+set area [expr ($e - $c)*($i-$g)]
+puts "Area of the $a is : $area"
+}
+close $file
+
+
+example2:
+Read the macro_area file and display all the lines and calculate the area of each cell and total area of the cell using file handling operations.
+(note: if coordinates are not givenm on order,if check the arguments value, if arguments are not sufficient print error., x1>x2 and y1>y2, orint the error.)
+
+set file [open "macro_area" r]
+set file1 [open "output.txt" w] 
+set total_area 0
+while {[gets $file line] >= 0} {
+#puts $line
+set length [llength $line]
+if {$length == 0} {
+continue
+}
+for {set i 1} {$i < $length} {incr i 2} {
+switch [lindex $line $i] {
+"x1" {set x1 [lindex $line $i+1]}
+"x2" {set x2 [lindex $line $i+1]}
+"y1" {set y1 [lindex $line $i+1]}
+"y2" {set y2 [lindex $line $i+1]}
+}
+}
+set area [expr  ($x2-$x1)*($y2-$y1)]
+puts "Area of the [lindex $line 0] is : $area"
+puts $file1 "Area of the [lindex $line 0] is : $area"
+set total_area [expr $total_area + $area]
+#puts "Total area of the all cells is: $total_area"
+}
+puts "Total area of the all cells is: $total_area"
+
+
+-----------------------------------------
+1) based on inputs passed to as argument. find the corresponding parameter values of each cell in the tcell_info.txt file using file handing operations.
+
+lassign $argv cell_name parameter
+set file [open "cell_info.txt" r]
+while {[gets $file line] >= 0} {
+
+set c [lindex $line 0]
+if {$cell_name == $c} {
+if {$parameter == "MRT"} {
+set a [lindex $line 1]
+} elseif {$parameter == "MFT"} {
+set a [lindex $line 2]
+} elseif {$parameter == "MIRT"} {
+set a [lindex $line 3]
+} elseif {$parameter == "MIFT"} {
+set a [lindex $line 4]
+} elseif {$parameter == "scenario"} {
+set a [lindex $line 5]
+} else {
+puts "Error: wrong parameter"
+}
+}
+}
+puts "the cell name is $cell_name and parameter is $parameter : $a"
+
+	
+
+
+############Assignment############
+1) #output: day is monday 1-7 
+
+2) # 1. using the arguments we want read student name and subject.
+	2. if we mentioned any student name and subject name.
+	3. based on the student name and subject we have to get the marks of the particular subject.
+	4. print the error if student na,me and sub name is not there in data base.
+
+--------------------------------------------------------------------------
+
+9. wtrite a tcl pgm to find the area of a cell, pass the file and cell name  as argument value using proc.
+proc area {file_name parameter} {
+set file [open "$file_name" r]  
+set flag 0
+while {[gets $file line] >= 0} {
+set length [llength $line]
+if {$length == 0} {
+continue
+}
+set para [lindex $line 0]
+if {$parameter == $para } {
+for {set i 1} {$i < $length} {incr i 2} {
+switch [lindex $line $i] {
+"x1" {set x1 [lindex $line $i+1]}
+"x2" {set x2 [lindex $line $i+1]}
+"y1" {set y1 [lindex $line $i+1]}
+"y2" {set y2 [lindex $line $i+1]}
+}
+}
+set area [expr ($x2 -$x1) * ($y2-$y1)]
+puts "area of the [lindex $line 0] is : $area"
+exit
+}
+}
+if {$flag == 0} {
+puts "error: wrong cell name"
+}
+}
+
+area macro_area SRAM
+
+
+11. find the number of times 0.10 present in the cell_info.txt file using proc.
+proc count {file_name} {
+set file [open "$file_name" r]
+set num 0
+while {[gets $file line] >= 0} {
+foreach b $line {
+if {$b == 0.10} {
+incr num
+}
+}
+}
+puts "the number of times 0.10 present in the file is : $num"
+}
+count cell_info.txt
+
+
+1. Modular programming: procedure allows you to break up your code into smaller, more manageble pieces. This makes your code esiear to read, understand and maintain.
+
+2. Code reusability: Once you define a procedure, you can call it multiple times from different parts of your code.
+
+3. Parameterization: procedure can take input parameters, which aloows you to pass a different values. this makes your code more flexible and adaptable.
+
+4. Encapsulation: procedures can be used to encapsulate complex logic or alogorithms, making it easier to reuse or share that logic with other developers.
+
+ex:
+proc add {a b} {
+set c [expr $a + $b]
+return $c
+}
+puts [add 10 10]
+
+
+
+1. write a proc with variable number of arguments?
+
+proc sum {args} {
+set s 0
+foreach arg $args {
+incr s $arg    
+# s+1
+}
+return $s
+}
+
+puts [sum 1 5 6 2]
+puts [sum 1 5 ]
+puts [sum 1 5 10 20 6 2]
+puts [sum 1 5 6 2 5]
+
+---
+Arguments with default values/implicit arguments
+
+Implict arguments in TCL procedure may have implicit values.
+An implict arguments values is used if no explict values is provided.
+
+proc sum  {a {b 2} } {
+puts $a
+puts $b
+}
+sum 10 20
+
+
+proc sum  {a {b 2} } {
+set c [expr $a + $b]
+return $c
+}
+puts [sum 10 20]
+
+
+# how to return multiple values in the proc.
+# the return command passes one value to caller.
+there is often a need to return the multiple values. in such cases we can make return list.
+
+
+proc sum  {a b} {
+set m1 [expr $a + $b]
+set m2 [expr $a - $b]
+set m3 [expr $a * $b]
+set m4 [expr $a / $b]
+return [list $m1 $m2 $m3 $m4]
+}
+puts [sum 20 10]
+
+
+
+
+Scope of the variables in the proc:
+
+local variables:
+A variable declared inside a procedure has a procedure scope/ local verible.
+
+proc sum  {} {
+set a 10
+puts $a
+}
+#puts $a
+sum
+
+global variables:
+
+Any variable which is declared outside the proc. we can also use thi variable inside proc.
+
+set b 20
+proc sum  {a} {
+global b
+set c [expr $a + $b]
+return $c
+}
+puts [sum 10]
+
+set d [expr $b * $b]
+puts $d
+
+---
+Recursion in the proc:
+Recursion is way yo call the procedure itself repeatedly.
+
+Recursion is a way of declaring proc in which the proc being defined is applies within its own defination.
+
+1. adding of the sum by the given arguments:
+
+proc maneesh {a} {
+set sum 0
+for {set i 1} {$i<=$a} {incr i} {
+ set sum [expr ($sum + $i)]
+}
+puts $sum
+}
+maneesh 10
+
+2. write for the factorial if we give argument value.
+
+proc fac {a} {
+if {$a >0} {
+return [expr $a * [fac [expr $a-1]]] 
+} else {
+return 1
+}
+}
+puts [fac 5]
+
+--
+In Tcl a "nested proc" is a procedure that is defined inside another procedure. This means that the nested procedure is only visible and accesible within the scope of the outer procedure. Once the outer procedure returns or is exited, the nested procedure is no longer accessible.
+
+proc outer_proc {} {
+	proc inner_proc {name} {
+	puts "hello world"
+	} 
+	inner_proc "vlsiguru"
+}
+outer_proc 
+
+
+or
+proc outer_proc {a} {
+	proc inner_proc {name} {
+	puts "hello world"
+	return $name
+	} 
+	puts [inner_proc "vlsiguru"]
+return $a
+}
+puts [outer_proc tcl_hyd]  
+----------------------
+
+
+what is array in tcl?
+
+In Tcl, an array is a data structure that stores a collection of values, which can be accessed using an index. It is similar to a list or a dictionary in other programming languages. An array is defined using the "array" command, followed by the name of the array and its values.
+
+array
+
+set numbers {
+
+1 10
+
+2 20
+
+3 30
+
+}
+
+
+
+Array in TCL
+
+In TCL array is a data structure that stores a collection of values under single variable name.
+
+Array is systematic arragements of elements with the indices.
+
+Each value in the array is associated with an index which is a unique identifier.
+
+the value in TCL array can be different types, such as integers, strings or other arrays.
+
+
+
+the follwing are some of the operators that can be used in TCL arrays.
+
+1. array set:	 creates or update an array with a list of values.
+	array set num {1 10 2 20 3 40 5 50}
+	#parray num
+	puts $num(1)
+
+2. array get:	 retrieves values from an array and return them as a list.
+	array set colour {0 block 1 white 2 blue 3 red}
+	#parray colour
+	set myarray [array get colour]
+	puts $myarray
+
+
+3.array size:	 it returns the number of elements in an array.
+	array set colour {0 block 1 white 2 blue 3 red}
+	#parray colour
+	set myarray [array size colour]
+	puts $myarray
+	
+4. array names:	 it returns the names (indices) of all the elements.
+	array set colour {0 block 1 white 2 blue 3 red}
+	#parray colour
+	set myarray [array names colour]
+	puts $myarray
+
+5.array exist: 	 it returns 1 if array is exist else 0 otherwise.
+	array set colour {0 block 1 white 2 blue 3 red}
+	if {[array exist colour]} {
+	puts "Array is exists"
+	} else {
+	puts "Array is not exists"
+	}
+	
+6. parray:  It will print entire array with key and its values
+
+	CMD: parray
+
+7. array unset:  to delete or unintialaize the array
+
+	array set colour {0 block 1 white 2 blue 3 red}
+	array unset colour
+	if {[array exist colour]} {
+	puts "Array is exists"
+	} else {
+	puts "Array is not exists"
+	}
+
+#how to print array values:
+array set colour {0 block 1 white 2 blue 3 red}
+foreach c [array names colour] {
+puts $colour($c)
+}
+
+
+In TCL, all arrays by nature are assosiative.
+Arrays are stored and retrieved without any specific order.
+
+Assosiative arrays have an index that is not necessarily a number.
+the convential way to create array:
+
+array set colour {0 black 1 white 2 red 3 blue 4 green}
+paary colour
+
+
+# adding array values to the array
+array set colour {0 black 1 white 3 red 4 blue 5 green}
+#before adding
+parray colour
+
+#after adding
+set colour(2) orange
+parray colour
+
+# how to create the array individually
+	set colour(0) red
+	set colour(1) green
+	set colour(2) blue
+	parray colour
+
+# how to delete particular element or unintialize particular array element.
+	set colour(0) red
+	set colour(1) green
+	set colour(2) blue
+	parray colour	
+	unset colour(1)
+	parray colour
+
+# Example 1 : Newmeric array
+
+#define an array of integers
+		array set nums {
+		1 10
+		2 20 
+		3 30 
+		}
+		#parray nums
+		#acess element of the array:
+		#num1 is 10
+		#num2 is 20
+		set num1 $nums(1) 
+		set num2 $nums(2) 
+		set num3 $nums(3)
+
+		# loop throgh all the elements of tghe array.
+	
+		foreach index [array names nums] {
+		set value $nums($index)
+		puts "number($index) is : $value"
+		}
+
+# example 2: Associative array # define an associative array 
+	array set person {
+	name "jhon smith"
+	age 30
+	city "hyderabad"
+	}
+	#parray person
+	set name $person(name)
+	set age $person(age)
+	set city $person(city)
+
+	foreach key { name age city} {
+	set value $person($key)
+	puts "$key is $value"
+	}
+
+# example 3: multi- dimentional array
+array set matrix {
+	{0,0} 1
+	{0,1} 2
+	{1,0} 3
+	{1,1} 4
+}
+#parray matrix
+#acces elements of the array
+set m00 $matrix(0,0) 
+set m01 $matrix(0,1) 
+set m10 $matrix(1,0) 
+set m11 $matrix(1,1) 
+
+#loop thrugh all the elements of the array
+
+foreach indices [array names matrix] {
+set value $matrix($indices)
+puts "matrix($indices) = $value"
+}
+
+
+
+
+
+
+example 2: 
+
+tclsh p4.tcl std_name sub
+1. using the arguments we want read student name and subject.
+2. if we mentioned any student name and subject name.
+3. based on the student name and subject we have to get the marks of the particular subject.
+4. print the error if student na,me and sub name is not there in data base.
+
+soloutin:
+lassign $argv stdn subn
+array set student {
+std1 {10 20 30}
+std2 {40 50 60}
+std3 {60 70 80}
+std4 {30 50 60}
+}
+set flag 0
+foreach b $subn {
+if {$subn == $b} {
+set flag 1
+}
+}
+if {$flag == 0} {
+puts "error: the student name is not found in the database"
+exit
+}
+foreach c [array names student] {
+if {$stdn == $c} {
+if {$subn == "p"} {
+set d [lindex $student($c) 0]
+} elseif {$subn == "c"} {
+set d [lindex $student($c) 1]
+} elseif {$subn == "m"} {
+set d [lindex $student($c) 2]
+}
+}
+}
+puts "student_name is : $stdn\nsubject_name:$subn\nmarks:$d"
+
+
+
+
+---------------------------------------------------------------------------------------------
+
+Dictionary:
+
+In TCL, a dictionary is a data structure that associates keys with values. It is similar to an array, but unlike an array, the keys can be any tcl value, not just integers or strings.
+
+Dictionary:
+In TCl, Dic essentially a associative array with the keys and values pair.
+
+In TCL a dic is a data structure that stores key-values pairs. where keys are unique
+
+In TCL,A dic is an arrangment for mapping values to keys.
+
+Dic are created using arrays.
+Dic are faster then the arrays.
+
+
+
+how to create dic.
+set colour [dict create clour1 "black" colour2 "blue" colour3 "red" ]
+
+puts $colour
+
+
+# how to access the elements of a dic, you can use $ operator.
+
+# how to add the values to the disc.
+
+
+dic operators:
+
+dict set: to add the values to dic
+set colour [dict create colour1 "black" colour2 "blue" colour3 "red" ]
+ 
+puts "before adding: $colour"
+dict set colour colour4 "orange"
+puts "afrer adding  : $colour"
+
+
+
+dict get: retrieves the value of the specific key in the dict.
+# get the value of the key.
+
+set colour [dict create colour1 "black" colour2 "blue" colour3 "red" ]
+ 
+puts "before adding: $colour"
+set val [dict get $colour colour2]
+puts $val
+
+
+dict size: returns the number of key-value pair in the dic.
+set colour [dict create colour1 "black" colour2 "blue" colour3 "red" ]
+ 
+puts "before adding: $colour"
+set val [dict size $colour]
+puts $val
+
+
+dict exists: Returns a bollean indication whether a specific key exists in the dict.
+
+set colour [dict create colour1 "black" colour2 "blue" colour3 "red" ]
+puts $colour
+if {[dict exists $colour colour5]} {
+puts "colour5 is exists in dict"
+} else {
+puts "colour5 is not exists in dict"
+}
+
+or--
+set colour [dict create colour1 "black" colour2 "blue" colour3 "red" ]
+puts $colour
+set a [dict exists $colour colour3]
+puts $a
+
+
+dict keys:	Returns a list of all the key in the dict.
+
+set colour [dict create colour1 "black" 2 "blue" colour3 "red" ]
+puts $colour
+puts "the keys of the dic is: [dict keys $colour]"
+
+
+dict values: Returns a list of the values in the dict.
+
+set colour [dict create colour1 "black" 2 "blue" colour3 "red" ]
+puts $colour
+puts "the values of the dic is: [dict values $colour]"
+
+dict unset: Removes a specific key from the dict.
+
+# how to remove a key-value pair from dict.
+set colour [dict create colour1 "black" colour2 "blue" colour3 "red" ]
+puts $colour
+puts "before removing: $colour"
+
+dict unset colour colour2
+puts "after removing key-value: $colour"
+
+dict append: add at the end of dict.
+
+set colour [dict create colour1 "black" colour2 "blue" colour3 "red" ]
+puts $colour
+puts "before removing: $colour"
+dict append colour colour5 "yellow"
+puts "after appen the value: $colour"
+
+
+
+1. dict create
+2. dict set
+3. dict get
+4. dict exists
+5. dict keys
+6. dict values
+7. dict unset
+8. dict append
+9. dict iteration
+
+
+dict iteration:
+set colour [dict create colour1 {green black} colour2 "blue" colour3 "red" ]
+puts $colour
+#puts "before removing: $colour"
+puts [dict keys $colour]
+puts [dict values $colour]
+
+foreach item [dict keys $colour] {
+set val [dict get $colour $item]
+puts $val
+}
+
+
+------------------------------
+Regular expressions in TCL:
+
+It is used to match the pattern in the text.
+
+In TCL, regular expression is pattern that describes a set of strings,extact the information,and perform complext text processing tasks.
+
+regexp command is supporting to match the pattern.
+
+This command allows to perform various operations such as matching, substution and splitting on the strings using regular expression.
+
+syntax: 
+[regexp "search_pattern" $content]
+
+example: 1
+set a "hello world"
+
+if {[regexp "hello" $a]} {
+puts "pattern is matched"
+} else {
+puts "pattern not match"
+}
+
+example: 2
+
+set a "HELLO world"
+
+if {[regexp -nocase "hello" $a]} {
+puts "pattern is matched"
+} else {
+puts "pattern not match"
+}
+
+
+List of all the metacharacters, quantifiers, and special sequences that can be used in the regular expresions in Tcl.
+
+
+Metacharacters:
+
+. (dot) -- matches any single character except newline.
+
+set a "abc"
+
+if {[regexp -nocase "^a.c$" $a]} {
+puts "pattern is matched"
+} else {
+puts "pattern not match"
+}
+
+| (pipe): --> matches either the pattern on its left or the pattern on it's right.
+
+set a "I have a cat"
+if {[regexp "cat|dog" $a]} {
+puts "pattern is matched"
+} else {
+puts "pattern not match"
+}
+
+[...] (bracket expression) --> matches any single character from the specified set of charecter
+
+[^...] (negeted bracket expression) ---> matches any single charater not in the specified set of characters.
+
+
+() (grouping) - group multiple pattern together.
+
+
+\ (escape) -escape a metacharector, allowing it to macthed as a literal character.
+
+set a "I have cat!"
+if {[regexp "cat\!" $a]} {
+puts "pattern is matched"
+} else {
+puts "pattern not match"
+}
+
+
+{....} (curly braces) --> matches the enclosed pattern exactly, e,g.[a-z]{3} matches three lowercase letters.
+
+Quantifiers:
+
+* {asterisk} - matches zero or more occurences of the proceding character or subexpression.
+
+set string "the quick brown fox jumps over the lazy dog"
+if {[regexp "o*" $string]} {
+puts "match found"
+} else {
+puts "no match found"
+}
+
+
+
+? (question mark) --> matches zero or one occurence of the proceding charector or subexpression.
+
+set string "the quick brown fox jumps over the lazy dog"
+if {[regexp "Fo?" $string]} {
+puts "match found"
+} else {
+puts "no match found"
+}
+
+{n} (exact quantifier) --> matches exactly n occurences of the preceding charector or subexpression.
+
+set string "the quick brown fox jumps over the lazy dog in the room"
+if {[regexp "o{3}" $string]} {
+puts "match found"
+} else {
+puts "no match found"
+}
+
+{n,} (minimum quantifier) -->matches atleast n occurences of the preceding charector or subexpression.
+
+set string "the quick brown fox jumps over the lazy dog in the rooom"
+if {[regexp "o{3,}" $string]} {
+puts "match found"
+} else {
+puts "no match found"
+}
+
+
+
+#exmple1: 
+
+set a {the mentor for functional_verification2026 is : mohan_kumar_NS}
+
+puts $a
+
+set b [regexp -nocase {the mentor for [a-z0-9_]+ is *: +[a-z_]+} $a]
+puts $b
+
+
+set a {the mentor for functional_verification2026 is : mohan_kumar_NS}
+puts $a
+set b [regexp -nocase {the mentor for ([a-z0-9_]+) is *: +([a-z_]+)} $a match1 match2 match3]
+puts "it returns if reg exp is true or false:$b"
+puts "it prints entire text:$match1"
+puts "it prints course name:$match2"
+puts "mentor name is :$match3"
+
+
+
+example2:
+set a {SRAM : -2500}
+set b [regexp -nocase {([a-z]+) *: +(-[0-9]+)} $a match1 match2 match3]
+puts "it return if reg exp is true or false: $b"
+puts "it return entire text: $match1"
+puts "the cell is: $match2"
+puts "the value is : $match3"
+
+
+Example3: read a file and match the pattern using regexp and if impass the argiument it has to ptrint the value of the cell.
+
+lassign $argv
+
+set file [open "text.txt" r]
+while {[gets $file line] >= 0} {
+if {$argv == [lindex $line 0]} {
+set b [regexp -nocase {([a-z]+) *: +([-0-9]+)} $line match1 match2 match3]
+#puts "it return if reg exp is true or false: $b"
+}
+}
+
+
+puts "the value is : $match3"
+
+
+
+example3:
+
+1. access all the 5 files (code1_data_1,2,3,4,5)
+2. pass argument as nom_temparature.
+3. to match this write thye regular expression.
+4. create a new file that contains finename with value of the nom_temparature
+5. if we pass wrong argument ptrint the error.
+6. if nom_temparature value is not present then print the ouput as : --
+
+lassign $argv name
+set files [glob C/Users/mogut/OneDrive/Desktop/TCL_HYD "code1_data_*" r]
+foreach f $files {
+#puts $f
+set fh_read [open $f r]
+while {[gets $fh_read line] >= 0} {
+set b [regexp -nocase { *([a-z_]*) *: *([a-z0-9.-]+) *;} $line match nor_tem nor_tem_value]
+if {$b == 1 && $name == $nor_tem } {
+puts " file name is $f and its value is $nor_tem_value"
+}
+}
+}
+
+
+
+
+command --> :%! grep "reg"

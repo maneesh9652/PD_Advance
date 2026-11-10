@@ -1,0 +1,937 @@
+ASIC--(applictaion specific integrated circuit).
+	Design of IC for parcticular applications.
+
+1. Idea --> what  is going to be design, [area, timing, performance]
+
+2. System specifications/requirements:--> components, size, nm technology, memory.
+	
+		o nm technology:---> the channel length between source to drain.
+
+3. Architechural design: --> 
+	o SOC architecture, Design specifications.
+
+4. RTL Coding :
+	o RTL design team takes SOC architecture and design specifications as input  and develops RTL code (Register tranfer level code)
+		o RTL code: High level discription of the design behaviour.
+	
+	o Individual blocks of the SOC are developed.
+		o CPU SS RTL is available
+		o GPU SS RTL is available
+		o DSP SS RTL is available
+		o Application specific SS RCL is available.
+		o memory RTL is available.
+
+5. RTL Integration:
+	o Connecting all sub systems RTL Code with each others is called RTL integration.
+
+	analogy --> Desktop ( monitor, motherboard, harddisk ....)---> assemble them to get the desktop.
+
+6. Functional verification:
+	o we need to make sure that above RTL integrated code is working fine or not?
+
+	o till this stage , design is still in the form of verilog code only.
+
+		o Functional verification gives confidence that, the code is working fine.
+		====================VLSI Front end flow end ==============================
+
+7. Synthesis: --->
+	o RTL or behavioural code of the design is converted to logic gate lavel format.
+GLS (0-delay & timing simulation)
+
+	o Whatever RTL ----> gate level conversion that happend. is it proper? 
+		o gate level simulations.
+			o same as funtional verification, difference is that we use gate level code insted of RTL code.
+			o steps for synthesis:
+				o transulation --> the rtl co0de is converted into gate level representation.
+
+				o optyimization -->  without changing the logic, optimize the design.
+				o mapping ---> mapping the std. cell with some techonology.
+
+8. DFT :
+	o Design for testability.
+	o 5nm technology : Finfet channel length is 5nm.
+		even small process variation, or dust particles==> Can results in manufacturing defects.
+			o Si wafer ==> we get various chips.
+				o some of them are faulty (with manufacturing defects)
+				o others are all good
+			o 100 chips
+				o 5 chips : bad
+				o 95 chips : good
+					o post silicon validation 
+						o Tester hardware
+							o we apply vectors (large stream of bits, 1 & 0s) to the hardware ===> output of the hardware will indicate whether chip is good or bad.
+							o vectors: 1. functional vectors(functional verification engineers) 2. test vectors (Provided by DTF engineers)
+							
+
+	o Does DFT engineer do the testing?
+		o NO. He is responsible for using techniques.
+			o SCAN, ATPG,Compression,MBIST,LBIST,JTAG,IJTAG ==> patterns are generated, that needs to run on the chip.
+			o DFT engineer uses a concept of 'similations' to check if above patterns are working fine at the RTL and gate level.
+				o DFT simulations: input is RTL code or gate level code
+				o post silicon validation: input is physical chip.
+					o in the both cases, we are going to run the vectors.
+
+9. Physical Design
+	o input to pysical design: gate level netlist (code)
+	o this gate level needs to be put to the die area
+		o at the transistors level
+			 o every transistor requires vdd, vss(gnd)
+			 	o if my chip has 1 billion transitors => how many lines should be go through the chip: 2 billion 
+			o many chips have a concept of multi voltage domains.
+				o Different transistors working on different voltages.
+
+10. Sign off
+11.STA
+12. Fabrication
+ 
+------------
+1) post silicon validation:
+	o Role of psv engineer, is to get vectors from the various teams and run those vectors on the chips,.
+		o figure out which chip is good, whic is bad.
+			o faulty chips are not used.
+			o Yeild = 100 - faulty chips / 100 %
+				200 tatal, 7 are faulty ==> yeild = 96.5%
+
+		final product packaging.
+
+2. multi voltage domain :
+	o Reduce the power consumption (Square)
+		3v --> 1.5v (power is reduced by 4 times)
+	o why can't we working with 0.1v?
+		o 900 times power reduction ==> mobile phone chanrging works for 3 years.
+		o 0.1v will not be sufficient to establish the channels in the transistors.
+
+
+3. pysical design
+	o voltage grids (power rings), and voltage rails (power rails) needs to be used to distribute the voltage to whole chip.
+		o where to keep power rings, power rails is what is done as part of power planning.
+			o done for all the voltages in the chip.
+
+		o to connect signals from one voltage domain to signals in another voltage domain.
+			o we need isolations cells to seperate the power domains inside the voltage domain.
+			o during the creation of 'level shifters' in the design
+				o out of 1000 required, even if one missed => circuit won't work properly.
+
+4. gate level netlist: => Macros + standard cells (logic gates)
+	o we are trying to place this 'macros' & std.cells in to the die area.
+
+5. Macros:  
+	o hard macro
+	o soft macro
+
+6. physical design does 2 levels
+	o chip top level
+		o uses individual blocks LEF (macros) and another sta.cells (which don't belong to any macro) => implement the PD flow on that.
+		o block level 
+		o ouput of block level implimentation : LEF file (macros)
+			o LEF : layout exchange format.
+
+7. 2 types of digital designs
+	o combinational 
+	o sequential
+		o requires concept of storage element.
+		o storage requires flipflops
+		o each flip flop requires
+			o clock
+			o reset
+		o requires a clock for each flipflops.
+
+	o If my design has 1 lakh of flipflops 
+		o how many clock lines are required?
+			o 1 lakh clock line.
+		o how many reset lines to be required totally?
+			o 1 lakh line
+8. chip uses multiple clocks
+	o 10 to 15 clocks are used across the chip.
+		o it helps with optimal power consumption.
+		o high performance circuits requires high frequency clock
+		o low performance circuits requires low frequency clock
+		
+9. Main chip gets only 2 clocks as input
+	o clock generation circuit
+		o PLL
+		o clock dividers
+	o 2 source clocks => we generate clocks of various frequncies
+		500Mhz, 200khz
+			1000Mhz
+			32khz
+			1Mhz
+				o these clocks are distributed to the various blocks on the chip.
+10. A chip will have billion of things going on it.
+	o distribution of clock => clock tree synthesis (CTS)
+		o reset also will be distributed.
+	o we need to connect one block on the chip with another block of the chop.
+
+11. Regarding  clock ? I don't get source clock
+	1ghz clock needs to go every flip flop in block.
+		o all the flipflops should recive the clock at the same time.
+			o CTS
+				o Uses many clock distribution techniques ao that all the flipflops get clock at the same time.
+
+12. Clock skew:
+
+13. Metal Layers:
+	o all above connections can be done with one layer of metal?
+		o Clock will be given in one metal layer
+		o Reset will be given in 2nd metal layer
+		o voltage(vdd) will be given in 3rd metal layer
+		o voltage (vss) will be given in 4th  metal layer
+		o data connection and routing will be given 5th metal layer
+
+14. cross talk
+
+15. we are doing every connection inside the chip
+	o clock distribution
+	o reset distribution
+	o voltage distribution
+	o connection of one block to another block
+		o all these are done with metal.
+		o what is  associated with metal ?
+			o Resistance
+				o power dissipiation 
+				o voltage drop (IR drop)
+					o probbly, chips has billion of metal lines => each has power dissipation and voltage domain.
+
+16. Physical design engineer needs to analyze IR drop(voltage drop) also
+	o what happens if there is voltage drop?
+		o destination point if it requires 3.3v for proper operation.
+			o due to IR drop => am getting 2.2v, => circuit may not work properly.
+
+17. MOST IMPARTANT THING ABOUT PHYSICAL DESIGN IMPLEMENTATION
+	whole chip can be treated as => voltage, resistance, capacitance.
+
+18. why RC circuit impartant?
+	o Both resistor and capacitance impacts the delay of the circuit.
+		o how to reduce the delay?
+
+
+19. We can't manufacture chip just by doing floorplan, powerplan, placement, CTS, routing
+	o we need to do timing analysis
+		o chip consists of lot of resistor and capacitors => which introduces the delay?
+			o rise time (signal goes from 0-1) : it should be in the reasonable limit
+			o fall time (signal goes from 1-0) : it should be resonable limit.
+		o all these delays are comming because of R & C
+			o If metal dosen't offer any resistance (R=0 for any metal length), chip would have been ideal => no need to do timing analysis.
+			o In reality , chip is not idel, => metal have resistance, there is a parasitic capacitance => it introduces delay.
+
+
+	o concept of checking all these delays
+			o delay are many types
+				o net delay (delay from metal)
+				o clk-q delay
+				o rise delay
+				o fall delay
+				o propagation delay
+	
+	o Pysical design engineer extracts a file call "SPEF" from the whole physical design implementation.
+		o SPEF: standard parasitic extraction format.
+			o .01 cm of copper , with 0.1um  width,=> 0.002 of resistance.
+			o based on load the output of thye gate , how many circuits it has to be drive => capacitance values.
+
+
+20. Physical verification:
+	o basic layout rule checks 
+		o distance of one metal to another metal => can't be smaller than 0.1nm (ex)
+			o we check thought out the circuit for this rule.
+
+21. Physical design is still being done at gate level only.
+	o these gates and macros needs to be converted to transistor level.
+		o Layout engineer does this converstion.
+	o now whole circuit is in transistor level.
+
+
+
+22. GDSII
+	o 3 dimentional positioning of everything in the circuit.
+		o where is vdd line (x y z)
+		o where is vss line (x y z)
+		o where is tech metal one
+		o for all transistors (billion) where are source (x y z) positions
+		o for all transistors (billion) where are drain (x y z) positions
+		o for all transistors (billion) where are gate (x y z) positions
+		o for all transistors (billion) where are source (x y z) positions
+		
+	o Foundry uses these inputs and series of IC fabrication steps => finally chip is fabricated.
+
+===================================================================================================
+
+questions:
+1. net delay
+	o gate level netlist?
+		o gate : logic gates
+		o level: something implemented using the logic gates.
+		o netlist: list of the nets
+		o net?
+			o electrical wire is called as a net.
+			o output of any logic gate is always a net,.
+		o one type of net in verilog is 'wire'
+			nets are 4 types in verilog:
+				wire, wand, wor, tri
+		o net delay
+			 o delay caused by wire
+2. fall time 
+	o AND gate output is supposed to go grom 1-0
+		o ideally we want this transition to be happening in 0 time.
+		o in real circuits, there is a delay by the time AND gate output settles to 0 => delay (fall time)
+
+Notes:
+
+1. How these delays are impartant for a physical design engineer?
+	o STA
+		o Static: we won't apply any inputs to the design.
+		o timing analysis: Since we are doing timing analysis.
+	o Dynamic?
+
+2. Timing analysis is done so that actual electronic device will not have any timing violations, which will in turn result in chip entering in to the meta stable state.
+
+	o what is meta stable?
+		o it is the state the value is in between, not completly zero or not one.
+	o flipflop 
+		o inputs: clk, rst, d
+		o output: q 
+	o what is special about flipflop?
+		o it is one of the storage elements.
+		o sequential circuits compolorily requires the flipflops.
+		o Flipflop store the value from one clock cycle to another clock cycle.
+	o design are all sequential circuits
+		ex: mobile phone chip is a sequential circuit
+			o next state of mobile phone depends on the current state of the device.
+			o there is a need to remember what is the current state of the device.
+				o to remember => we need storage element=> flipflops.
+					state = HYNERNATE or google brosing
+					state = sleep 
+					state = active or camera.
+3. D flipflop:
+	o DFF captures the D input at the positive edge of the clock and assigns to Q.
+	
+	o Setup time:
+		o minimum time before the active edge of the clock for which duration, D input must be stable. If this condition does not meet, Q may or may not captures the value of D. This is called as mertastability. Where we don't know whether Q takes 0 or 1.
+			o Analogy: flight boarding time is steup time.
+				o If we arrive 45 min before boarding time, we  will surly say we will catch the flight (1). else we might miss(0)
+				o If we arrive 45 min after. we may or may not catch flight.
+			o this condition where we can't predit the ouput is called meta stable.
+
+				o For simulation purpose, we represents it as x
+					o this 'x' can can be 0 or 1.
+				o if D input does'nt meet the setup time requirement , the ouput enters into a meta stable state.
+				o where it can be take value '1' or '0'.
+		o what is the issue with meta stability?
+			o flight analogy.
+			o hyd to New york through 4 connections.
+				o hyd --> delhi--> hongkong--> Dubai --> new york
+
+				o if we enter meta stability at hyd. (we may or may not catch the flight.)
+			o VLSI circuits: one flipflop going tho meta stability (unknown state), this meta stability spreads to whole circuit with in few clock cycles.
+				o whole design enters into unknown state.
+			o If we reach hyd with proper boarding time then we won't have metastability.
+	
+	o We can visualize VLSI circuits as below.
+		o FF_1 -> combinational logic --> FF_2 -> combinational logic --> FF_3
+		o STA visualizes the whole circit as lakhs or millions of violet boxes below.
+			o what is there in violet ?
+				o 2 FFs and combinational circut between them.
+				o 1st FF Lanch flop
+				o 2nd FF Capture flop
+
+			o STA tools (primetime, genus) does the setup and hold analysis for all these million violet boxes in the whole circuit.
+
+	O How does one analysis looks like?
+		o simple addition and suubtraction macthemetics.
+		o Output of launch flop will arrive at the the input of capture flop after tClk->Q + tCombo delay.
+			o this input has to meet  the setup time requirement of the capture flop.
+			o This input of capture flop will be applicable for next positive edge of the clock/
+		o for set up time requirement.
+			o tClk-Q + tCombo + t_CaptureflopSetuptime < ClkTP + tclklauncharrivaldelay.
+				o if above condition doesn't meet what happens?
+					o steup violations => capture flop will enter into metastability.
+		o Lets say for one combination, setup time is not meeting?
+			o tClk->Q + tCombo + tcapturesetuptime > ClkTP
+					o what can we do to fix this ?
+						o 1. Reduce the clock frequency => clock time period is increses.
+								o this is not a solution.
+						o 2. whole circiut is analyzed as 2 paths
+							o data path
+							o clock path
+							o STA engineer  increases or decreses the delay in the Data or clock path to finally meet the above eqution.
+
+	o How to increse tclkLaunchtoarrivaldealy?
+		o add buffers to increse this delay.
+	o Incresing data path delay worsens chances of meeting setup time.
+		o Decresing will improve.
+	o Incresing the clock path delay improves chances of meeting steup time.
+
+		o fix setup time violation of one pair of flops.
+			o Decresing data path delay
+			o Incresing the clock path delay.
+
+o How to Decrese the data path delay?
+		o reduce the tclk-Q delay by using high performance flipflops (HVT Cells)
+		o Reduce the net delay.
+		o Reduce the combo delay.
+			o Use high performance logic gates (HVT cells)
+		o after doing all this even we don't meet set up time requirements.
+			o  Then go for the clock path delay.
+		o How to increse the clock path delay.
+			o Add buffers in between one one clock and next flop clock input.
+5. STA Keywords.
+	o setup time
+	o Metastability
+	o Launch flop
+	o Capture flop
+	o Data path
+	O Clock path
+	o Data require time
+		o What time we want data to be available at the capture flop input.
+	o Data arrival time
+		o The time at which launch flop output recahes capture flop input.
+	o tClk-Q
+	o tCombo
+	o tSetuptimeCaptureflop.
+	o Timing reports
+		o analysis of the data
+			o data arrival time (AT)
+		o analysis of clock path
+			o data require time (RT)
+		o Setup slack = Data require time - Data arrival time (RT-AT)
+			o If setup time slack is greter than '0', we are meeting the setup time.
+				o else not meeting
+			o to meet setup, we try to increse data require time and decrese data arrival time.
+
+
+6. Hold time.
+	o analogy
+		o time to collect luggage after flight landing.
+	o Minimum time after active edge of the clock for which durtaion D input must be stable. If this condition does not meet, Q may or may not capture the value of D. This condition is called metastability. where we don't know wthere Q is '0' or '1'
+
+o Hold time analysis is done for Launch flop only ?
+	o hold analysis doedn't have any relation with clock frequency.
+
+In Summary:
+	o input applied to the DFF must be stable for sometime before +edge of the clock and also after the +edge of the clock.
+		o Before results in setup time violations.
+		o After results in hold time violations.
+
+
+
+4. What is DFF has to do with timing analysis?
+	o setup time, hold time
+5. set up time:
+	o analogy : set up time is similar to flight boarding time.
+		o Ideal case : boarding time should be '0'
+		o set up time: In ideal case it should be '0'.
+			o beacuse of delay causing elements inside the DFF =>it requires us to apply the D input some minimum time before +edge of clock => that minimum time is called as 'setip time'.
+
+-----
+6.Fixing timing violations
+	o HVT cells 
+		o High Vt 
+	o RVT cells
+		o standard vt
+	o LVT cells
+		Low vt
+o same logic gate can be implemented using either HVT RVT and LVT cells.
+	o By using HVT cells we have gives less performance, less power consumption.
+		o logic gate delay will be more.
+	o By using LVT cells, we have more performance, higher power consumption.
+		o logic gate delay will be less.
+o To fix the timing violattions, Physcal design engineer uses these cells.
+
+--> example:
+	tCl-Q = 2ns
+	tCombo = 7ns
+	Tp = 10ns
+	tsu = 5ns
+
+
+	Setup slack= RT - AT
+	o AT = Tclk-Q + Tcombo 
+		2+7 = 9ns
+	o RT = Tp -Tsu
+		10 - 5 = 5
+	o ss = RT - AT
+		5-9 =-4
+	o here we are getting seup violation
+o if i want to fix the issue the what should i do now?
+	o we can insert some buffers in the rt path to increse the delay.
+		o suppose if i insert 3 buffers 
+			then RT = 10+1+2+2= 15
+					15 - 5 = 10
+					o ss = 10 - 9 = 1
+						o now setup slack is fixed.
+	Hold slack= AT - RT
+		9 - 5 = 4
+	o here hold is not violating.
+
+
+--------------
+1. Timing concers
+	
+	o Transistors (logic gate or IC) has 3 parameters that impact its behaviour.
+		PVT
+			o Process, Voltage , Temparature
+		o Process
+			o Fabrication process
+			o Better process means better timmings behaviour.
+		o Voltage:
+			o The timing will improve with Higher voltage.
+				o As we apply higher voltage, transistor performance improves.
+		o Temparature
+			o For sub micron(5nm, 3nm) technologies, as we increase the temparature transistor performance will improves.
+
+
+o summary:
+	o For best performance of a transistor.
+		o Better process, higher voltage, higher temparature.
+		o By using best performance transistors, we get standard cells which have lower delay values.
+	 
+	o For worst performance of a transistor.
+		o Worst process, lower voltage, lower temparature.
+		o By using worst performance transistors, we get standard cells which have higher delay values.
+
+2. Timing corners:
+
+o Considering above 3 possibilities, what we get are 3 timing corners.
+	o Best case corner
+	o Nominal corner
+	o Worst case corner
+o Why above 3 corners are impartant to us?
+
+	o Ex Lava mobile phone
+		o 100 mobile phones
+			o out of these 100 phone, some of them with better process, some with medium process and other with bad process.
+			o We can use some mobile phone in Russia where ambiant chip temparature will be -50 degrees centigrade.
+				o Phone should work properly?
+			
+
+o As an STA engineer, we need to analyze the chip for all the corncer cases.
+	o Best case corner will simulate
+		oex: Good process chip used in africa
+	o Niminal case corner will simulate
+		oex: nominal process will used in india
+	o Worst case corner will simulate
+		oex: Worst case chip used in Russia
+o STA engineer will analyze cricuit all the corners and makes sure timing  is meeting in the all cases.
+
+3. STA uses SDF file  or SDC
+	o SDF --> Synopsys design format
+		o IF we use SDF where delay numbers are small, it results in best case analysis.  
+		o IF we use SDF where delay numbers are medium , it results in nominal case analysis.
+		o IF we use SDF where delay numbers are higher, it results in worst case analysis.
+	o If STA analysis works on all 3 corners, that means chip will work in real in all possible casese.
+
+o what is SDF or SDC
+	o very big file which tells you at every point of chip.
+		o Rise time
+		o Fall time
+		o net delay
+	o Best case SDF analysis target hold time violations.
+		o by using best case SDF if we able to fix all the hold time violations, then we can be guaranteed that other corners won't violate.
+	o Worst case SDF analysis targets setup violations.
+		o Worst case : already data arrival time will be worst possible , im this case if we meetr setup violations . In all the cases (nominal , best ) data arrival time smaller.
+		o we can say surly meet set up time in thode cases.
+
+O STA has lot of parameters needs to be taken in to consideration.
+	o PVT 
+	O clock uncertainty (clock jitter)
+	o Clock skew
+		o Global skew
+		o Local skew
+	o HVT cells, RVT < LVT cells
+
+--> Physical design:
+	The physical design is the process of transforming a circuit decription into the physical layout, which describes the position of cells and routes for the interconnectoins between them.
+	Gate level netlist that is optimized for area, power, and timing.
+
+
+--> Physical design work happens at 2 level:
+	o chip level PnR(Physical design) 
+		o PnR: Place and route.
+	o Block level PnR implementatiom:
+o if we are get a project from Qualcom
+	o mobile SOC team
+		o Block level 
+			o Complete PD flow from floorplanning to STA closure, pysical verification.
+				o there are no timing violations w.r.t block.
+				o From that PD flow, The Physical design engineer who worked on the block, extracts file as LEF and DEF.
+		o  Chip level 
+			o Chip level PD engineers gets the LEF and DEF for all the sub blocks.
+			o Chip level engineer have lots of Macros and Standard cells => On which he needs to do the PnR flow.
+
+
+----> What are the factors that make PD flow complex?
+	o area limitations
+		o every chip comes with specific area within which complete chip netlist should be fitted in to it.
+	o Different factors will come into picture.
+		o Utilization
+			o How much we are actually utilizing for macro and std.cells.
+		o Congestion
+			o we can either reduce metal size.
+			o reduce the metal spacing.
+			o Increse the space between one macro to another macro.
+		o everything we do in physical design flow, has a impact on timing analysis.
+			o placement of macros impact the delay values.
+			o placement of std cells impact the delay values.
+				o based on placement, the metal line length will varry.=? resistance is changed=> delay will changed.
+			o CTS also impacts timing analysis.
+				o if we fallow one style of CTS, then we will have one type of timing analysis.
+			o Routing also impacts the timing analysis.
+			o At every stage of PD flow The PD engineer has to check whether there is no timing violations.
+		o Closing timing violations:
+			o to close timing violations, PD engineer changes some part of circuit.(adding buffers, changing vt, etc) this can impact some other part of the circuit.
+			o At sub micron, there are lot od 2nd order effects.
+				o DIBL, CMOS Latchup,Hot electron effect,pinch off, etc..
+			o physical design engineer has to do introduce some additional things in the flow, to mitigate all these problems.
+				o mitigation? at the end of implementation, all above isuues should not be there in any part of the chip.
+
+		o Multi voltage domain:
+
+		o ECO 
+			o engineering change order --> we have done coplex flow, at later stage we find that in the design there is requirement for minor design update.
+				o in this case, we don't want to stsrt VLSI flow from begining.
+				
+
+
+		o All these PnR flow has to be done while making sure that chip meets 
+
+			o IR drop analysis requirements
+			o all Physical verification rules.
+		o For complex chips, Routing and CTS takes a lot of time.
+			o Mobile SOC routing can take 12 hours.
+			o PD engineer needs to avoid iterations, by doing very efficient analysis at each run.
+
+
+----------------
+	o Timing constraints will get from SDF file.
+
+1. Timing Closure:
+	o Implement complete PD flow (FF, PP, PL, CTS, ROUTING), while making sure that above timing contraints are met and able close these in all corners.
+	o Corners
+		o best, nominal, worst
+			o best case SDF: Lowest delay value
+				o AND : cell delay : 1.4ns
+
+			o Nomimal case SDF: nominal (moderate) delay value
+				o AND : cell delay : 1.6ns
+
+			o Worst case SDF: Hiogh delay value
+				o AND : cell delay : 1.9ns
+
+
+2. Timing constraints:
+	o Give some examples
+		o Design should work at this clock frequncy.
+		o What are the clocks
+		o set input delay
+	
+o what happens if timing closure is not done?
+	o Set time ,hold time violations, design constraints not meet
+	o Chip enters into metastability, causing whole chip go to in unknown state.
+		o all the design nets will have 'x' value when chip is in unknown state.
+
+o Timing Optimization:
+	o Can we change timing contraints or design constraints, to meet timing?
+	o We need find ways to optimize the delays.
+Timing: Commonly used terms.
+	o set up time (set up slack)
+	o Hold time (hold slack)
+	o Timing arcs, Data arrival time, Data Required time
+	o Delays
+		o net delay, cell delay, propagation delay, trasistion delay, rise delay, fall delay.
+3. o Setup time is analysis is done on capture flop.
+   o hold time is analysis done on launch flop
+   		o launch flop should hold its input for minimum time even after +edge of clock.
+
+
+4. .V file
+	o .v: verilog file
+	o consists of std cells connected using nets.
+	o Design implementation in terms of logic gates.
+	o Since it is a collection of nets, we call it as netlist.
+
+5. Macro:
+	o soft macro
+	o Hard macro
+6. standard cells
+	o Aspect ratio
+
+=>  Technology Node:
+	o Technology node is the channel length of the transistos used in  implermet or manufacturing the chip.
+	o 28 nm : CMOS
+		o All the logic gates in the design are implemented using CMOS  transistors.
+	o 14nm onwards
+		o All the PD implemention happens using FinFET technology.
+		o 7nm FinFET
+
+=> Technology library file?
+	o Library : Collection of data.
+		o Library files are characterized for a CMOS which is at 28nm.
+		o input files are developed based on that charecterization.
+-> Why input file are required?
+	o why not velilog netlist is sufficient?
+	o TLU+ : when we extract metal information from the PD netlist 
+		o SPEF is the output of extraction
+
+==> PD Key words.
+o CMOS Latchup
+		o Unwanted NPN and PNP BJTs
+		o To address COMS latch up, PD engineers use a concept 'N well' or Using Tap  tap connections.
+	o Leakage current:
+		Ideally CMOS flow of charage carriers should be only from S_D or D-S
+		o Any flow of charges other than above paths it is a leakage.
+o Metal layers:
+o VDD, VSS
+O TIE Cells:
+	o TIE0, TIE1 cells
+	o whenever there any unused nets in the netlist, we connect them either VDD or VSS, so that they are not floating.
+	
+---> Delays:
+	o Delay are part of design constarints file.
+	o There are used as part of timing closure analysis.
+---> Parasitic Capacitance:
+	o unwanted capacitance at the output of every gate.
+	o what factors impact parasitic capacitance?
+			o Fanout at the output of the gate.
+		o Capacitance is the ability to store the charge.
+	o Why it is impartant for PD engineer?
+		o As parasitic capacitance croses a threshold value, RC circuit delay increse.
+		o which impcats the timing behaviour.
+		o PD engineer may have to use techniques to reduce the parasitic value
+			o Using buffers.
+o Fanout:
+	o Number of gates driven by a cretain net, it's the load they are putting on the net.
+
+o Clock distribution (part of CTS)
+	o Concept of routing clocks to all the flip flops in the design.
+
+o Skew:
+	o Relative difference in time, when the clock is reaching one flipflop and next fliflop.
+
+	 o types of skew:
+	 	o Gblobal skew:
+			o check the skew for globally, (non related flops.)
+		o Local skew:
+			o checks the skew between 2 related flipflops.
+
+
+
+==> Reset Distribution:
+	o Reset is a very impartant signal(port) in any IC.
+	o Design can enter in to unknown or unwanted state for many reason.
+		o How to bring it back to a known state?
+			o By using reset we can bring it back to known state.
+	o How to apply reset to all flops?
+		o what factors to be considerd?
+			o All FFs should recive reset with minimal skew.
+		o every chip has clock and reset manager block. which gets reset from the external world.this reset maanager further distributes the reset to complete chip.
+
+==> IC Fabrications:
+	o BJT,CMOS,FinFET
+	o Fabtication concepts
+		o Lithography
+		o Etching
+		o Oxidation
+		o Dopping
+			o level of dopping
+		o Metal deposition
+		o Mask
+==> GDSII
+	o Geometrical data base standard for information interchange.
+	o Whole chip parameters
+	o Transistor
+		o S,D,G,Oxide layer,Substrate
+		o Dopping concentraition
+		o Metal size
+	o Nets
+	o Metal layers.
+
+===> 
+-> Commonly Used terms in pd:
+1. RTL code, netlist
+	o difference between RTL code and netlist.
+	o both are representation of same design in different format.
+2. Input file:
+3. Die area
+4. IO area
+5. chip area
+6, Aspect ratio
+	o Aspect ratio is the ratio between vertical routing resources to horizontal routing resources.
+7. Utilization:
+	o How much area of the chip has been utilized.
+	o std cells, macros and blockages divided by total chip area.
+
+8. Fan in, Fan out, load, drive strngth.
+9. Data path, Clock path.
+10. Die area sub componets:
+	o Macros
+		o soft macro
+		o hard macro
+	o fly lines
+		o o virtual lines which tools will indicate during the floorplan stage,.
+
+ 11. standard cells:
+ 	o Logical cells
+		o standard cells rquired for design functionality implimentation.
+		o std cells are part of synthesis output.
+	o Physical cells:
+		o cell are added by the PD engineer.
+		o They are used for
+			o Connection purpose
+			o TIE1, TIE0 cells
+			o Tap cells
+			o spare cells
+			o endcap cells
+			o filler cells
+12. o UPF 
+		o Voltage domains, power domain, clock domain
+		o level shifter, Isolation cells
+	o Power planning
+		o Rings 
+		o Stripes
+			o Rails
+		o Power pads
+		o vertical and horizontal straps
+	o HFNs
+		o High fanout net synthesis - Buffers
+		o COncept of using buffer at high fanout nets, to reducxe the capacitance.
+13. Vt swapping:
+	o Replacing one type of std cells with other type of std cells to impact the timing of the cells, do that we can meet the timing requirements.
+
+14. Congestion:
+	o Number of routing lines that can be put in specific area.
+
+15. Delays:
+	o Net delay
+		o Net dealy due to the net.
+	o propagation delay
+		
+	o cell delay 
+		o delay caused by cell.
+
+16. Congestion driven placement
+	o type of floorplan and placement approach, where it is driven by the permissible congestion requirements.
+
+17. placement
+	o Global placement (OR) course placement.
+	o Detailed placement
+	o Legalized placement.
+
+18. Blockages:
+	o which restrict the placemet of std cells
+		o type
+			o soft
+				o buffer and inverter
+			o hard
+				o no cells allowed to place
+			o partial blockage
+				o based on the percentage value the cells will block,
+
+19. Signal integrity effects:
+		o Electomigration
+		o cross talk
+		o Antena effect
+20. DEF:
+	o Design exchange format file. which includes complete info of the current design. like metal layes , cell orientation etc.
+
+
+
+
+
+
+
+PD inputs:
+
+	2 types inputs files
+
+	o Design related
+		o .v,SDC, Scandef,UPF
+	o Technology related 
+		o .lib, Tech,LEF, TLU+
+===> Design related:
+	i) .v
+		o it is file which contains gates and its connections.
+	ii) SDC: (MMMC or MCMM)
+		o Synopsis design constraints.
+			o What clock clocks we are using 
+			o What is set input delay
+			o What is set output delay
+			o multicycle path
+			o half cycle path.
+	
+	iii) Scandef
+		o Scan chain information.
+	iv) UPF:
+		o Unified power format.
+			o consists:
+				o Power domain
+				o Isolation cell
+				o power switches
+				o Retentioal cells
+				o power state table.
+						
+---> Technology related file:
+	i) library (.lib)
+		-> .db - compiled vertion of .lib.
+				o it is in the form of binary (0 and 1).
+		o one word:
+			o It consists Timing , Area and Power information.
+		o for each cell:
+			o Wire load model
+			o Area of cell
+			o Functionality of cell
+			o Input and output pin capacitance values.
+			o Table for internal power
+			o Table for cell dealy
+			o Table output transistion.
+
+	ii) Tech 
+			o technology file (.tech) 
+			o in cadence it is tech_lef
+		o one word:
+			o metal, via rules, site row and site coloum information.
+				
+				o Site row height and site row width
+				o metal layer rules
+				o current density rules
+				o metal density rules
+				o via rules.
+
+	iii) LEF
+		o Layout exchange format
+			o Abstract layout information.
+
+		o consists: for ecah cell
+			o width and height of a cell
+			o allowed orientation
+			o layers of pins
+			o Co ordinates of pins
+			o Other layer Co ordinates (nwell & Polysilicon)
+
+			
+	iv) TLU+ : Table for lookup
+		o R and C of metal layers per unit length for different width.
+			o it is in the form of .db
+				o it is used at the placement stage.
+		
+
+
+
+pysical design
+	o floorplanning
+		o create core and die area
+		o port placement
+		o voltage area creation
+		o macro placement
+		o physical cells
+	o power planning
+		o power rings --> power rails
+	o placement
+		o placing the std. cells inside the core area legally.
+
+	o CTS
+		o creating the clock tree to reduce load on the clock port.
+	O Routing
+		 o making the real connections with metal layers.
+
+	sign off
+		o checking the design constraits.
+

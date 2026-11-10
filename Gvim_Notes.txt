@@ -1,0 +1,175 @@
+				----> GVim Notes <-----
+
+o gvim --> Graphical vi text editor.
+	o it is used for text editing 
+	o in gvim only we are implementing the verilog, System Verilog & UVM Coding part.
+	o already we have diff diff text editors notepad,notepad++,.. etc
+	o it is more flexibility than other text ediors.
+
+--> Key features of Gvim.
+	-> we can split the screen into three types
+		o vertical split
+			cmd:- :vspl filename.extension
+		o horizontal split
+			cmd:- :spl filename.extension
+		o tabnew
+			cmd:- :tabnew filename.extension
+
+- CMD:- :vspl ~/.vimrc
+	--> Gvim Vimrc Commands:- 
+				set number
+				set hlsearch
+				set incsearch
+				set showmode
+				set autoindent
+				set tabstop=4
+				set tabpagemax=100
+				set nocompatible
+				set backspace=indent,eol,start
+				set guifont:Consolas:h17
+				syntax on
+				hi Search guibg=yellow guifg=black
+--> in gvim mainly we are working on the two modes:
+	i. Escape mode 
+	ii. Insert mode
+
+--> Escape mode:-
+	o if the cursor is in the thick black color it refers to Gvim is in Escape mode 
+
+	o h :- move the cursor to the left <--
+	o j :- move the cursor to the down 
+	o k :- move the cursor to up
+	o l :- move the cursor to right -->
+	o w :- move the cursor to nxt word starting.
+	o b :- move to the cursor to the prev word starting.
+	o 0 :- move the cursor to the starting/begining of the current line 
+	o $ :- move the cursor to the ending of the current line 
+	o gg :- it move the cursor to the stating/1st line of the text document
+	o G :- it move the cursor to the last_line of the text document
+	o r :- replace the single character
+	o R :- replace the multiple characters
+	o yy :- copy the single line
+	o p :- paste the line below the cursor
+	o P :- paste the line above the cursor
+	o 5yy :- copy the the 5 lines
+	o 5p :- print/paste for 5 times
+	o dd :- delete the single line/cut the single line
+	o D :- from the cursor it will delete end of the line
+	o u :- undo the latest changes
+	o U :- it refers to change the data into upper case letters 
+	o ctrl+r :- redo the latest changes
+	o ctrl+f :-move the cursor forward
+	o ctrl+b :- move the cursor to backward
+	o ctrl+a :- increment the number
+	o ctrl+x :- decrement the number
+	o ggVG :- select the entire document
+	o dw :- it will delete the single word & remains in the Escape mode
+	o ndw :- it will delete the "n" no.of words & remains in the Escape mode
+
+--> Insert mode:-
+	o if the cursor is in the thin black color it refers to Gvim is in insert mode 
+
+	o i :- insert the text before the cursor
+	o I :- insert the text starting of the current line
+	o a :- insert the text after the cursor
+	o A :- insert the text end of the current line
+	o o :- insert a new line bleow the current line
+	o O :- insert a new line above the current line
+	o s :- delete a single character under the cursor
+	o cc :- delete the entire line & moves to insert mode
+	o cw :- delete the single word
+	o c$ :- it will delete from the cursor to till end of the  line
+
+--> Visual block mode:-
+	o with the help of the Visual block mode at a time we can able to change the data in all the lines at same position 
+	- steps to follow the visual block mode
+	1. move to the Escape_mode (press "esc" button in Keyboard) 
+	2. press "ctrl+v" --> it will enters into Visual block mode
+	3. select where we need to update the data --> with the help of (h/j/k/l) or use (< up & down arrows > ) 
+	4. press "c" --> change the text 
+		- now it will enters into the insert mode 
+		- after it enters the insert mode update the "text"
+	5. once ur done with the updating the text press "Esc" button it will replicate the behaviour for all the lines.
+	- Here we can able to use all the insert mode commands as "c/i/a"
+
+Q. If I wants to search any data/word, How it is possible In Gvim?
+A. - with the help of forward slash "/"
+	--> enter into Escape_mode, then use the below command  
+	CMD:- /word (or) ?word
+
+NOTE:-
+	- for find or search anything in the MS.Word we need to use the command as "ctrl+f"
+	- in word we have a flexibility we can easily replace the charaters 
+
+--> here we need to the command as Search & substitute
+	CMD:- :0,$s/old_name/new_name/g
+		0 :- from the starting line of the text document
+		$ :- till end line of the text document
+		s :- search & substitute
+		old_name :- prev_name what u need to change
+		new_name :- latest_name u need to update
+		g :- Globally
+		gc :- it will ask the permission whether I need to change or not
+			Y :- do the update
+			N :- don't do any update
+
+--------------------------------------------------------------------------------------------------------
+
+--> Command mode:-
+	o if any arguments need to pass with ":" representation is called as Command mode arguments (or) search also comes under the Command mode only
+
+	:w :- to save the single file
+	:wa :- to save Multiple/all the file at a time
+	:q :- it will quit a single file 
+	:qa :- it will all the files at a time
+	:q! :- it will quit the file force fully or recussively
+		- it will quit the file without save
+	:wq/:wq! :- it will save the & quit the file
+	:sav :- it used to save the with another name/ copy the data into another file 
+	:20 :- it will directly moves to the line nmbr 20
+	:w! :- it saves the file force fully
+
+--> Recording mode:-
+	o it is also similar to the visual block mode, but in visual block mode if all the lines are same then it will works fine 
+	o what if the lines are uneven, we can't able to use the visual block mode
+	- to overcome this problem we need to use the "Recording mode"
+
+--> Steps to do the recording mode
+	o press "qa" 
+		- q refers to start the recording mode 
+		- a refers to under the "a" varible we are storing the data 
+	o asper ur requirement folow the gvim basic commands
+	o once update was done press "q" - it will stop the recording mode
+	o now if we wants to replicate the behaviour of the recording mode then we need to use as number followed with the "@" variable name
+		ex:- 4@a --> it refers to it will applicable for the 4 lines from the cursor position 
+
+--> fold the lines & unfold
+	o this used for the while working on the 100/200 lines of code/text document we need to compare with the line no 45 & line nmbr 95
+	o manully it is not possible, gvim supports the feature of floding the lines 
+	o use visual block mode then press "zf" --> it will flod the particular lines for you
+	o now if we wants to unflod the line place the cursor at the flod line pres "zo"
+	o if we forgot how to unflod the lines then no need to worry if u close & reopens the file it will automatically unflod the file 
+
+----------------------------------------------------------------------------------------------------------
+--> Recording mode:-
+	o it is also similar to the visual block mode, but in visual block mode if all the lines are same then it will works fine 
+	o what if the lines are uneven, we can't able to use the visual block mode
+	- to overcome this problem we need to use the "Recording mode"
+
+--> Steps to do the recording mode
+	o press "qa" 
+		- q refers to start the recording mode 
+		- a refers to under the "a" varible we are storing the data 
+	o asper ur requirement folow the gvim basic commands
+	o once update was done press "q" - it will stop the recording mode
+	o now if we wants to replicate the behaviour of the recording mode then we need to use as number followed with the "@" variable name
+		ex:- 4@a --> it refers to it will applicable for the 4 lines from the cursor position 
+
+--> fold the lines & unfold
+	o this used for the while working on the 100/200 lines of code/text document we need to compare with the line no 45 & line nmbr 95
+	o manully it is not possible, gvim supports the feature of floding the lines 
+	o use visual block mode then press "zf" --> it will flod the particular lines for you
+	o now if we wants to unflod the line place the cursor at the flod line pres "zo"
+	o if we forgot how to unflod the lines then no need to worry if u close & reopens the file it will automatically unflod the file 
+
+----------------------------------------------------------------------------------------------------------

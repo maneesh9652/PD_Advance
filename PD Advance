@@ -1,0 +1,1062 @@
+cygwin download -->cygwin.mirror.constant.com
+1.Synthisis:
+-----------------
+
+we use dc_shell for synthisis.
+source--> we use source running script files on present working dict
+
+Step-by-step explanation
+Create project directories
+mkdir SYN
+cd SYN
+mkdir inputs outputs reports
+
+Creates folders for the synthesis project.
+
+Copy input files
+cd inputs
+cp -rf /home/moguthalama/pd_b3_b4/SYN/inputs/* .  [SYN inputs copied from this path] 
+cd ../
+
+Copies RTL, library, and SDC files into the project.
+
+Start Synopsys DC Shell
+which $SHELL
+csh
+source /home/tools/synopsys/cshrc_synopsys
+dc_shell -output_log_file ./outputs/31_08_26.log  [-output_log_file --->command]
+
+Loads the Synopsys environment and starts Design Compiler.
+
+
+set search_path "/home/vgp4maneesh/pd_b3_b4/SYN/inputs" [verilog,sdc and librarys]
+Specifies where DC should search for files.
+
+Load technology library
+set target_library ./inputs/saed32hvt_ss0p95v125c.db
+set link_library ./inputs/saed32hvt_ss0p95v125c.db
+target_library: Standard cell library used for synthesis. gates are choosen here in this file
+link_library: Library used to resolve references.
+Read RTL
+analyze -format verilog ./inputs/mux.v -autoread -top mux_8_1
+
+Reads the Verilog source of the 8:1 multiplexer.
+
+Elaborate the design
+elaborate mux_8_1
+
+Builds the design hierarchy.
+
+Read timing constraints
+source ./inputs/mux.sdc
+
+Loads the SDC file containing clock, input/output delays, etc.
+
+Compile (Synthesis)
+compile_ultra -no_autoungroup  [1--> optimization of time area power, stoping automatic ungrouping]
+
+Maps the RTL to standard cells and optimizes for timing, area, and power.
+
+Write gate-level netlist
+write_file -format verilog -hierarchy -output ./outputs/mux.vg
+
+Generates the synthesized Verilog netlist.
+-hierarchy - top moule + sub moule code is preserved.without hierarchy only top module is preserved.
+
+Write SDC
+write_sdc ./outputs/mux.sdc
+
+Saves the constraints after synthesis.
+
+Generate reports
+report_power
+report_area
+report_timing
+
+Produces reports for:
+
+Power
+Area
+Timing (setup/hold, slack)
+
+source - Read and excute the file contents
+gui_start---->enter-->select mux_8_1
+
+
+2.FloorPlanning
+-----------------
+
+ cp -rf /home/moguthalama/pd_b3_b4/PD/inputs/* . [inputs copied from this path]
+┌──────────────────────────────┐
+│  Go to PD Working Directory  │
+└──────────────┬───────────────┘
+               ↓
+        cd pd_lab_b2/pd/
+
+               ↓
+
+┌──────────────────────────────┐
+│      Change to C Shell       │
+└──────────────┬───────────────┘
+               ↓
+              csh
+
+               ↓
+
+┌──────────────────────────────┐
+│ Load Synopsys Environment    │
+└──────────────┬───────────────┘
+               ↓
+source /home/tools/synopsys/cshrc_synopsys
+
+               ↓
+
+┌──────────────────────────────┐
+│         Start ICC2           │
+└──────────────┬───────────────┘
+               ↓
+          icc2_shell -output_log_file ./outputs/log/maneeshloh12
+
+               ↓
+
+┌──────────────────────────────┐
+│       Set Search Path        │
+└──────────────┬───────────────┘
+               ↓
+set search_path {/home/vlsiguru/ORCA_TOP/ref/CLIBS ./inputs/} [librarys,netlist,sdc,
+
+               ↓
+
+┌──────────────────────────────┐
+│     Define NDM Libraries     │
+└──────────────┬───────────────┘
+               ↓
+set a {saed32_lpm_tech.ndm saed32_hvt.ndm saed32_lvt.ndm \
+saed32_rvt.ndm saed32_sram_lp.ndm}
+
+
+               ↓
+
+┌──────────────────────────────┐
+│      Create Design Library   │
+└──────────────┬───────────────┘
+               ↓
+create_lib -ref_libs $a ./outputs/ORCA_TOP.nlib
+
+               ↓[here all ndm files are in ORCA_TOP.nlib]
+
+┌──────────────────────────────┐
+│ Check Reference Libraries    │
+└──────────────┬───────────────┘
+               ↓
+        report_ref_libs
+
+               ↓[It will display all ndm files]
+
+┌──────────────────────────────┐
+│       Create the Block       │
+└──────────────┬───────────────┘
+               ↓
+        create_block ORCA_TOP
+
+               ↓[Actual block for physical design]
+
+┌──────────────────────────────┐
+│      Read Verilog Netlist    │
+└──────────────┬───────────────┘
+               ↓
+read_verilog ./inputs/ORCA_TOP.v -->This is for reading netlist,it will store in design block,so this cause the inputs clk outputs available in gui_start.   
+
+               ↓[ORCA_TOP.v present pd inputs]
+
+┌──────────────────────────────┐
+│        Save the Block        │
+└──────────────┬───────────────┘
+               ↓
+          save_block
+
+               ↓
+
+┌──────────────────────────────┐
+│   ICC2 Database Setup Done   │
+└──────────────┬───────────────┘
+               ↓
+                  
+     open_lib ./outputs/works/ORCA_TOP.nlib/
+                       │
+                       │ Opens the ICC2 design library (.nlib)
+                       │ containing the synthesized database.
+                       ▼
+                 list_blocks
+                       │
+                       │ Displays all design blocks available
+                       │ inside the opened library.
+                       ▼
+               open_block ORCA_TOP
+                       │
+                       │ Opens the design block so it can be
+                       │ modified and analyzed.
+                       ▼
+
+1.Shape using side ratio(core and die area creation)
+----------------------------------------------------
+
+L--[1 1 1 1]
+T--[1 1 2 1 2 1]
+U--[2 1 1 1 1 1]
+initialize_floorplan -core_utilization 0.75 -shape R -use_site_row -site_def unit -side_ratio {1 2} -core_offset 5  
+
+initialize_floorplan [This tells icc2 complier to create core and die area for floorplanning,initialize mean setting up for the first time]
+-core_utilization 0.75 [75% of space used for placing standard cells]
+-shape R \
+-use_site_row [To generate rows horizontally]
+-site_def unit [To generate unit cell,used for generating rows]
+-side_ratio {1 2} \
+-core_offset 5  
+ save_blocks -as name                               
+        close_blocks
+
+
+
+
+
+2.Shape using co-ordinates
+initialize_floorplan -boundary {{50 50} {970 50} {970 500} {500 500} {500 970} {50 970}} -use_site_row -site_def unit -core_offset 5
+
+This for L shape.
+
+
+
+
+3.Source using def file
+-current_block
+-close_blocks -force
+-open_block core_ushape
+-write_def ./outputs/reports/filename
+-close_block -force
+-open_block core_tshape
+-read_def ./outputs/reports/filename
+-gui_start
+
+
+
+3.cell information,attributes,filter
+
+
+              get_flat_cells
+                       │
+                       │ Lists all cells in the design
+                       │ (standard cells + macros).[get_flat_cells-->module and inner module and inner everything counts/show]
+[get_cells-->only top module conut is given]
+                     lib--    [get_cell]
+[get_flat-cells]           tap                 
+                           wire
+
+
+                       ▼
+ sizeof_collection [get_flat_cells]
+                       │
+                       │ Counts the total number of cells.
+                       ▼
+get_flat_cells -filter "is_hard_macro == true"
+                       │
+                       │ Displays only hard macros
+                       │ (SRAM, ROM, PLL, etc.).
+                       ▼
+sizeof_collection [get_flat_cells \
+-filter "is_hard_macro == true"]
+                       │
+                       │ Counts the number of macros.
+                       ▼
+sizeof_collection [get_flat_cells \
+-filter "is_hard_macro == false"]
+                       │
+                       │ Counts only standard cells.
+                       ▼
+list_attributes -application -class cell
+                       │
+                       │ Lists every attribute available
+                       │ for the cell class.
+                       ▼
+list_attributes--> list properties like height width
+-application -->tells ICC2 to display all the attributes that are supported by the ICC2 application for the specified class.
+-class ---> cell layer ports..
+
+ get_attribute [get_flat_cells U507] height
+                       │
+                       │ Reads the value of one attribute
+                       │ (example: cell height).
+                       ▼
+                  DESIGN ANALYSIS
+                                  
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+1. Get All Routing Layers
+────────────────────────────────────────────────────────────────────
+Code:
+get_layers -filter "is_routing_layer"
+
+Explanation:
+Lists all routing layers available in the technology
+(M1, M2, M3, M4, ...).
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+2. Get Pitch of Routing Layer
+────────────────────────────────────────────────────────────────────
+Code:
+get_attribute [get_layers M1] pitch
+
+Explanation:
+Displays the pitch (center-to-center distance)
+between adjacent routing tracks of M1.
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+3. Get Minimum Width
+────────────────────────────────────────────────────────────────────
+Code:
+get_attribute [get_layers M1] min_width
+
+Explanation:
+Returns the minimum legal wire width
+for Metal1.
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+4. Get Minimum Spacing
+────────────────────────────────────────────────────────────────────
+Code:
+get_attribute [get_layers M1] min_spacing
+
+Explanation:
+Returns the minimum spacing allowed
+between two Metal1 wires.
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+5. Get Routing Direction
+────────────────────────────────────────────────────────────────────
+Code:
+get_attribute [get_layers M1] routing_direction
+
+Explanation:
+Shows preferred routing direction.
+Example:
+M1 → Horizontal
+M2 → Vertical
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+6. Get Core Area Boundary
+────────────────────────────────────────────────────────────────────
+Code:
+get_attribute [get_core_area] boundary
+
+Explanation:
+Displays the coordinates of the core area
+used during floorplanning.
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+7. Count Hard Macros
+────────────────────────────────────────────────────────────────────
+Code:
+sizeof_collection \
+[get_flat_cells -filter "is_hard_macro == true"]
+
+Explanation:
+Counts all hard macros like
+SRAM, ROM, PLL, IP blocks.
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+8. Count Sequential Cells
+────────────────────────────────────────────────────────────────────
+Code:
+sizeof_collection \
+[get_flat_cells -filter "is_sequential == true"]
+
+Explanation:
+Counts all sequential cells
+(Flip-Flops and Latches).
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+9. Find Double Height Cells
+────────────────────────────────────────────────────────────────────
+Code:
+set dh [expr 2*1.672]
+
+sizeof_collection \
+[get_flat_cells -filter "height == 3.344"]
+
+Explanation:
+Finds standard cells whose height
+is twice the site-row height.
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+10. Find Specific Library Cell
+────────────────────────────────────────────────────────────────────
+Code:
+sizeof_collection [get_flat_cells -filter "ref_name == AND2X1_HVT"]
+
+Explanation:
+Counts the number of AND2X1_HVT
+standard-cell instances.
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+11. Find Cells Having More Than 5 Pins
+────────────────────────────────────────────────────────────────────
+Code:
+sizeof_collection \
+[get_flat_cells -filter "number_of_pins > 5"]
+
+Explanation:
+Counts cells with
+more than five pins.
+
+                                     │
+                                     ▼
+────────────────────────────────────────────────────────────────────
+12. Count Sequential Cells (Exclude Macros)
+────────────────────────────────────────────────────────────────────
+Code:
+sizeof_collection \
+[get_flat_cells -filter \
+"is_sequential == true && is_hard_macro == false"]
+
+Explanation:
+Counts only Flip-Flops/Latches,
+excluding hard macros.
+
+
+
+close_libs
+exit
+
+
+2.Port placement
+-----------------
+-all_inputs
+-all_outputs
+-get_ports *
+-get_ports *clk*
+-remove_from_collection [all_inputs] [get_ports *clk*]
+
+
+ 1.Region Method
+--------------------
+open l block for only for inputs
+gui_start
+create-->placement blockages--type-->soft
+draw the port
+-get_placement_blockages
+-get_placement_blockages blockagename
+-get_attribute [get_placement_blockages PB_2] bbox
+-set a [get_attribute [get_placement_blockages PB_2] bbox]
+--remove_pin_guide *
+
+-create_pin_guide -boundary $a -layers {M5 M6} -pin_spacing 1 [remove_from_collection [all_inputs] [get_ports *clk*]]
+-place_pins -ports [remove_from_collection [all_inputs] [get_ports *clk*]]   {*in*-->stars for incliding before and after in . EX: in_clk_]
+-gui_start
+
+Both inputs and clk mixed inputs.so using remove_from_collection
+
+for l block only clk
+--remove_pin_guide *
+
+-create_pin_guide boundary $a layers {M5 M6} pin_spacing 1 [get_ports *clk*]
+-place_pins -ports [get_ports *clk*]
+
+for l block only outputs
+--remove_pin_guide *
+
+-create_pin_guide boundary $a layers {M5 M6} pin_spacing 1 [all_outputs]
+-place_pins -ports [all_outputs]
+
+
+2.Side Method for port placement
+---------------------------------
+-set_block_pin_constraints -sides 2 -pin_spacing 1 -self -allowed_layers {M5 M6} -corner_keepout_distance 50 
+-place_pins -ports [remove_from_collection [all_inputs] [get_ports *clk*]]
+-remove_block_pin_constraints *
+
+
+3.Port_placement_each_pin_coordinates.
+---------------------------------------
+set_individual_pin_constraints -ports sdram_clk -location {454.8570 658.6000} -allowed_layers {M5 M6}
+place_pins -ports sdram_clk
+
+1.Open the block which already created ports [create port_locations file in gvim in pd scripts]
+2.script file getting ports coordinates [port_getting_script]
+3.script
+set file [open "/home/vgp4maneesh/pd_b3_b4/PD/scripts/port_locations.txt" w]
+foreach_in_collection p [get_ports *] {
+  set name [get_object_name $p]
+  set loc [get_attribute $p location]
+puts $file "$name $loc"
+}
+close $file
+
+
+4.Script file for placing ports [ports_mapping_script]
+5.Script
+set a [open "/home/vgp4maneesh/pd_b3_b4/PD/scripts/port_locations.txt" r]
+while {[gets $a file1] >=0} {
+lassign $file1 b c d
+set_individual_pin_constraints -allowed_layers {M5 M6} -ports $b -location [list $c $d]
+}
+place_pins -ports [get_ports *]
+close $a
+
+6.source ./scripts/ports_getting_script
+7.source ./scripts/port_mapping_script
+
+
+4.Voltage Creation 
+load_upf ./inputs/ORCA_TOP.upf
+get_voltage_areas-->for cheacking voltage area 
+get_power_domains-->for cheacking power domains like PD_ORCA_TOP,PD_RISC_CORE
+
+write a script to create voltage area
+1.Script for creating voltage area with utilization 0.8 [voltage_script]
+remove_voltage_area *
+set uti 0.8
+set tca 0
+foreach_in_collection a [get_flat_cells -filter "power_domain == PD_RISC_CORE"] {
+ set ca [get_attribute $a area]
+ set tca [expr $tca + $ca]
+}
+ set area [expr $tca / $uti]
+
+set h [expr 10 + 147 +10]
+set w [expr $area / $h]
+
+set lx 5
+set ly 5
+set ux [expr ((ceil($w / 0.152))*0.152) + 5]
+set uy [expr ((ceil($h / 1.672))*1.672) + 5]
+
+set nlx [expr $lx + 5.016]
+set nly [expr $ly + 5.016]
+set nux [expr $ux + 5.016]
+set nuy [expr $uy + 5.016]
+set box [list [list $nlx $nly] [list $nux $nuy]]
+create_voltage_area -power_domains PD_RISC_CORE -region $box -guard_band {{5.016 5.016}}
+ 
+
+
+
+
+-source ./sripts/voltage_script
+enable voltage area-- to view the votage area creation
+
+
+
+Deleting the block which is modified
+------------------------------------
+go to linux terminal
+kill -9 id  [process id --16845]
+
+
+
+1.Percntage of HVT LVT RVT
+set a [sizeof_collection [get_flat_cells]]
+
+set b [sizeof_collection [get_flat_cells -filter "ref_name =~ *HVT*"]]
+set c [sizeof_collection [get_flat_cells -filter "ref_name =~ *LVT*"]]
+set d [sizeof_collection [get_flat_cells -filter "ref_name =~ *RVT*"]]
+
+set e [expr {double($b) / $a * 100}]
+puts "HVT percentage = $e%"
+
+set f [expr {double($c) / $a * 100}]
+puts "LVT percentage = $f%"
+
+set i [expr {double($d) / $a * 100}]
+puts "RVT percentage = $i%"
+
+2.Routing layers min_spacing min_width
+set b [get_layers -filter "is_routing_layer == true"]
+
+foreach_in_collection c $b {
+    set a [get_object_name $c]
+    set w [get_attribute $c min_width]
+    set d [get_attribute $c min_spacing]
+
+    puts "$a $w"
+    puts "$a $d"
+} 
+
+3.Utilization finding
+set n 0
+set a [get_flat_cells]
+
+foreach_in_collection b $a {
+    set area [get_attribute $b area]
+    set n [expr {double($n) + double($area)}]
+}
+
+set r [get_attribute [get_core_area] area]
+
+set u [expr {double($n) / double($r)}]
+
+puts "Total cell area = $n"
+puts "Core area = $r"
+puts "Utilization = $u%"
+
+
+
+Macro Placement
+---------------
+Righ_click -->color by hierachy -->show tool bar -->initialize -->Remove_all
+--Place pink color macros in voltage are .They are four
+
+
+2.View --> flylines -->data flow flylies -->reload -->ok -->include tick every box -->Number of registers max 5-->reload -->ok.
+This enables the connections for macros.
+place the macros accordingly with connections
+
+
+s--> Select the macro and press s for draging.
+
+
+################################
+3.Align and distibute
+
+Align
+-----
+Port to macro distance 
+diatsnce 10.000   Anchor-parent
+select the macros for aligning
+
+Distibute
+---------
+Macro to Macro distance
+distance 15.000 Anchor selection
+select macros for distibute
+
+
+
+Set macros fixed
+-----------------
+set_fixed_objects [get_flat_cells -filter "is_hard_macro"]
+
+Set macros unfix
+----------------
+set_fixed_objects [get_flat_cells -filter "is_hard_macro"] -unfix
+
+Script for placing partial blockages
+-------------------------------------
+1.create keepout distance around macro
+create_keepout_margin -type hard -outer {1 1 1 1} [get_flat_cells -filter "is_hard_macro"]
+
+derive_placement_blockages -force ----> This will create soft blockages
+set a [get_attribute [get_placement_blockages] boundary]
+remove_placement_blockages -all
+
+create_placement_blockage -boundary $a -type partial -blocked_percentage 65
+
+
+commands for getting congestion report
+----------------------------------------
+set_app_options -name place.coarse.continue_on_missing_scandef -value true
+set_ignored_layers -max_routing_layer M6 -min_routing_layer M2
+create_placement
+legalize_placement
+report_congestion -rerun_global_router
+
+
+To reset placement of standard cells
+reset_placement
+
+
+Physical Only Cells
+--------------------
+Place Endcap cells
+-get_lib_cell *DCAP*
+
+create endcap cells
+-set_boundary_cell_rules -left_boundary_cell DCAP_HVT -right_boundary_cell DCAP_HVT -at_va_boundary
+-compile_boundary_cells
+we have to enable boundary option to view endcap cells
+
+-check_boundary_cells
+
+to remove boundary cells
+-remove_cells [get_flat_cells -all *boundary*]
+-remove_boundary_cell_rules -all
+To place tap cells
+-------------------
+create_tap_cells -lib_cell Dcap_HVT -distance 30 -skiped_fixed_cells -pattern stagger
+
+-check_legality
+
+to remove tap cells
+remove_cells [get_flat_cells -all *tapfiller*]
+
+---legalize_placement by every time when you to check legality
+####################################
+2.Power Plan
+source ./script/powerplan
+
+
+powerplan issues
+---------------
+1.check_pg_connectivity -check_std_cell_pins none
+view -- > error browser -->powerplan error --->M6 ---> right click --->highlight all errors
+
+
+
+Problem 1. Macro ring broken due M2 and M7 Strap 
+via between M2 and M7 created on macro ring.
+solution:
+-Increas corner keepout distance
+Macro ring formes inside the keepout ,M2 layer not pass into keepout.
+remove_keepout_margins *
+create_keepout_margin -type hard -outer {2 2 2 2} -blockage_percentage 80
+source	./scripts/powerfinal.tcl
+check_pg_connectivity -check_std_cell_pins none
+
+Problem 2: At top edge of voltage area ,VDD is formed but the encapcells present voltage area VDDH is connected .As VDD and VDDH are different nets for VDD and VDDH broken rail formed.
+
+solution:
+remove_cells [get_flat_cells -all *boundary*]
+remove_cells[get_flat_cells -all *tapfiller*]
+Increase/Decrease the height of voltage area.
+ change va_creation script hight nuy [actual value -1.62] -->physical only cells error.
+source ./script/va_creation
+-set_boundary_cell_rules -left_boundary_cell DCAP_HVT -right_boundary_cell DCAP_HVT -at_va_boundary
+-compile_boundary_cells
+
+create_tap_cells -lib_cell Dcap_HVT -distance 30 -skiped_fixed_cells -pattern stagger
+
+source ./script/powerfinal
+check_pg_connectivity -check_std_cell_pins none
+
+
+3.Problem M1 metal floating
+M2 metal layer is stoped at edge of macro ,if macro move to left then M1 andM2 via form 
+
+solution:
+Move macro to left 1 um 
+source ./script/powerfinal.tcl
+check_pg_connectivity -check_std_cell_pins none
+
+
+4.Problem Macro ring not connected 
+left side of macro error bar
+
+solution
+move macro to another side of error by the distance via already created.
+source./script/powerfinal.txt
+check_pg_connectivity -check_std_cell-pins none
+
+5.Problem M1 Vdd not connting with M2
+create_routing_blockage -boundary [get_selection] -layer M1 -net_type power
+
+
+
+PowerPlan errors 
+__________________
+1 . Macro ring broken d
+Increase the outer of keepout margin
+Source powerplan->check_pg_connectivity -check_std_cell_pins none
+
+
+2.Macro side error
+Move the macro
+Source powerplan →check_pg_connectivity -check_std_cell_pins none
+
+
+#################################
+
+Sanity Checks
+------------
+
+1.report_design_mismatch -verbose
+
+checks that all cells present in netlist has .lib or .lef
+-if not present it will show an error
+.lib file check the cell ppa
+.lef file check the cell pin connection ,orintation,coordination of pins
+
+--After the creation of lib --->we have to run this command
+Netlist consists of gates flip flops and connections of ports,pins
+
+2.check_mv_design
+-It checks whether the power domain has cells or not
+-It checks the primary power in voltage area created or ot {VDDH}
+-It checks power switch,isolation cell,retaination cell and whether they are inserted or not 
+-It checks level shifiter rules and whether they are inserted or not
+
+
+++After loading the upf file -->we done this sanity check
+
+3.check_scan_chain
+-Before we use this command we need to read_def file of scandf.file
+read_def ./inputs/ORCA_TOP.scandef
+
+-It is used for improving congetion by optimizing wire length.
+
+-It identifies missing or broken scan chain connections
+-It is scandf file
+
+4.check_netlist
+change_selection [get_cells cell name] --> check in gui schematic for problem [cell name is getting check_func.txt]
+After running check_netlist you will find warnings copy cell name there.
+
+It identify the unconnected pins
+Multi drivers
+Floating ports
+
+errors
+-------
+DCHK-005 — Pin connected to logic 0
+DCHK-017 — Input port is unloaded
+DCHK-021 — Output net is not driven
+DCHK-009 — Hierarchical net has no driver
+DCHK-010 — Hierarchical net has no drivers
+DCHK-014 — Net has a single tri-state driver
+
+5.check timing
+source ./inputs/sdc_constraints/mcmm
+check_timing -modes func > ./output/check_func.txt
+check_timing -modes test > ./output/check_func.txt
+
+change_selection [get_cells cell name] -->check in gui scxhematic for problem [cell name is getting check_func.txt]
+
+warnings
+--------
+1.TCK-001:unconstrained endpoints
+The timing tool connot perform the timing check because endpoint does not have a valid timing constraint.
+
+2.TCK-002:The rgister clock pins do not have a recognised clock source
+
+3.TCK-012:Missing input delays .like buffers
+
+
+#####################################
+1.Why we use sdc file in the floorplan?
+we use sdc file to define clock and timing constraints.This helps icc2 to understand the timing requirment and guide timing driven floorplanning and optimization
+
+2.set_input_delay
+	Defines the timing of input signals arriving from outside the design.
+
+3.set_output_delay
+	Defines the timing required at output ports.
+
+4.set_driving_cell 
+    specifies the driving cell.
+________________________________________________________________
+
+For getting app options 
+
+report_app_options *scandef*
+
+
+################################################################
+Placement:
+----------
+1.checking design
+-check_design -checks pre_placement_stage (sanitychecks|what type of checks|sanity checks)
+
+2.Reading scandef file
+-read_def ./inputs/ORCA_TOP.scandef
+-set_fixed_objects [get_flat_cells -filter "is_hard_macro"]
+
+Settings
+-------------
+1.TIE cell insertion
+2.Set advanced legalizer
+3.Set cell density
+4.Set ideal network
+5.set ignored layers
+
+
+3.TIE cell insertion
+-get_lib_cells *TIE*
+-set_attribute [get_lib_cells *TIE*] dont_touch false
+-set_attribute [get_lib_cells *TIE*] dont_use false
+
+4.Set advanced legalizer
+Advanced legalizer will place cells accordingly good timing.search and repair the cells which having the timing failure.
+report_app_option *advanced*legalizer*
+-set_app_options -name place.legalize.enable.advanced_legalizer -value true
+-set_app_options -name place.legalize.legalizer_search_and_repair -value true
+
+5.Set cell density
+It is in the sense use 75% of utilization for placing cells
+report_app_option *max*density*
+-set_app_options -name place.coarse.max_density -value 0.75
+report_app_option *max*fanout*
+-set_app_options -name opt.comman.max_fanout -value 25 (default fanout 40 ,we use 25 to reduce buffer used to satisfy the fanout limit)
+
+6.Set ideal network(make clock path ideal)
+source ./inputs/sdc_constraints/mcmm
+-set_ideal_network [all_fanout -clock_tree]
+
+7.set ignored layers
+-set_ignored_layers -max_routing_layer M6 -min_routing_layer M2
+-set_app_options -name route.common.net_max_layer_mode -value hard
+-set_app_options -name route.common.net_min_layer_mode -value allow_pin_connection
+
+
+
+
+1.Create coarse placement
+-reset_placement
+-create_placement
+-legalize_placement
+-report_congestion -rerun_global_router
+
+To View Congestion
+View-->Map-->globalrouter congestion-->reload-->select overflow -->apply
+
+
+##########################################################
+To reduce Congestion:
+
+1.Run congestion driven placement
+reset_placement
+ create_placement -effort high -congestion
+ 
+2.Refine placement
+create_placement_blockage at congestion area
+set a [get_attribute [get_selection] boundary]
+refine_placement -coordinates $a
+legalize_placement -incremental
+
+
+
+3.If congestion in macro region apply soft/partial blockages
+
+4.If congestion in core area 
+change_selection [get_flat_cells [get_selection] -filter "number_of_pins == 1"]
+create_keepout_margin -type hard -outer {2.128 0 2.128 0} [get_selection]
+legalize_placement -incremental
+
+Placement Optimization
+---------------------
+place_opt
+
+This checks (command includes)
+initial placement
+initial drc
+Datapath optimization
+Final placement
+Final optimization
+
+2.Compare netlist and generate differences
+It compares net before powerplan and after placement
+open block powerplan and run command for placement block
+eco_netlist -by_block optimization -write_changes ./outputs/eco.txt
+
+3.Report utilization
+report_utilization -->This gives utilization of core area for site rows ,It wont consider macros and cells
+
+To know the utilization of core area
+create_utilization_configuration -include all user_uti
+report_utilization -config user_uti
+
+To Know utilization of particular region 
+-----------
+create a placement blockage at the area you want know the utilization
+set a [get_attribute [get_selection] bbox]
+report_utilization -config user_uti -region $a
+
+To get cell count
+-report_design
+
+
+
+Max Transmition Violations
+-----------------------------
+route_global
+report_constraints -all_violators -max_transition -significant_digits 3 -nosplit -scenarios $a > ./outputs/reports/mt.txt
+1.Squential cell Violation
+Net : I_BLENDER_0/n4732
+PIN : I_BLENDER_0/s3_op2_reg[21]/QN
+
+Required Transition : 0.102
+Actual Transition   : 0.103
+Slack               : -0.001
+Violation           : VIOLATED
+Identification:
+- s3_op2_reg[21] → Register (Flip-Flop).
+- QN → Inverted output of the Flip-Flop.
+- Therefore, this is a sequential standard-cell violation.
+
+2.Combinational cells Violations
+Net                   	    Pin	Required	
+snps_OCC_controller/n10   	U21/Y
+snps_OCC_controller/n10  	U27/A1
+net_sd_sys_read_data[44]	ctmTdsLR_2_31321/A6	1.024	
+net_sd_sys_read_data[44]	I_BLENDER_1/U2176/A1
+net_sd_sys_read_data[44]	ctmTdsLR_1_18646/A4
+
+3.Macro Violations
+Net name                 	Violating pin	
+net_sd_sys_read_data[44]	I_SDRAM_TOP/I_SDRAM_READ_FIFO/SD_FIFO_RAM_1/02[12]
+
+4. Interview identification trick
+Pin name	Typical cell type
+A1, A2, A6	Combinational input
+Y, Z	Combinational output
+Q, QN	Sequential output
+RAM data/address pins	Macro
+
+
+get_attribute [get_selection] ref_name
+change_selection [get_nets name]
+
+
+Fixes 
+_________
+1 change partial blockage percentage of sdram macros to 60%
+2 reset_placement
+3 place_opt
+4 save
+5 route_global
+
+#######################################################
+1.Max_Transition Viloation Fixes
+If RT<AT violation occur 
+report_constraints -all_violators -max_transition -significant_digits 3 -nosplit -scenarios $a > ./outputs/reports/mt.txt
+
+ 1.Upsize Driver/VT swapping
+  #This gives instanues name
+ set a [get_flat_cells -of_objects [get_pins [all_connected I_BLENDER_1/N332 -leaf] -filter "direction == out"]] 
+ #Refernce name
+ get_attribute [get_flat_cells $a ] ref_name
+ -Nand2X2_Lvt
+
+ size_cell $a Nand2X4_Lvt  
+ #check hightest driving strength 
+ get_lib_cell *Nand2*_LVT  | and change drive strength
+ #if not work change Vt flovar
+ size_cell $a Nand2X4_Hvt
+
+ 2.Inserting Buffer
+
+ set a [get_pins [all_connected I_BLENDER_1/N332 -leaf] -filter "direction == out"]
+ insert_buffer $a NBUFFX8_HVT
+ legalize_placement -cells cellname
+ legalize_placement -increment
+
+ 
+
