@@ -1,0 +1,420 @@
+1. What is Static Timing Analysis (STA)?
+STA is a method used to check whether data reaches its destination within the required time.
+
+It checks the timing of a digital circuit without applying actual input test patterns.
+
+Example: Like checking whether a train reaches a station before its scheduled departure time.
+
+
+2. Why do we perform STA in VLSI?
+We perform STA to:
+- Identify setup and hold violations.
+- Check whether the design meets the required clock frequency.
+- Find critical timing paths.
+- Ensure reliable chip operation.
+Example: If the required clock period is 2 ns, STA checks whether data can travel within the available time.
+
+
+3. What is the difference between STA and Dynamic Timing Analysis?
+STA                                          	Dynamic Timing Analysis
+Does not require input test patterns     	Uses input test patterns
+Checks timing paths mathematically      	Checks timing during simulation
+Can analyse many timing paths	            Checks paths activated by simulation
+Uses tools like PrimeTime               	Uses tools like VCS
+
+
+4. What is a timing path?
+A timing path is the route through which data travels from a starting point to an ending point.
+
+Example: Flip-flop → Logic gates → Flip-flop.
+
+
+5. What are the different types of timing paths?
+There are four main types:
+1. Input-to-register.
+2. Register-to-register.
+3. Register-to-output.
+4. Input-to-output.
+
+
+6. What is a startpoint?
+A startpoint is the location from which a timing path begins.
+
+Examples:
+- Input port.
+- Launch flip-flop.
+
+7. What is an endpoint?
+An endpoint is the location where a timing path ends.
+
+Examples:
+- Capture flip-flop.
+- Output port.
+
+8. What is a launch clock?
+The launch clock is the clock that triggers the starting flip-flop to send data.
+
+Example: Clock reaches FF1 and FF1 launches data.
+
+9. What is a capture clock?
+The capture clock is the clock that reaches the destination flip-flop and captures the incoming data.
+
+Example: Clock reaches FF2, which captures data from FF1.
+
+10. What is a timing arc?
+A timing arc represents the timing relationship between two pins of a cell or between related timing points.
+
+Example: Input A to output Y of an AND gate.
+
+
+11. What is cell delay?
+Cell delay is the time taken by a signal to pass through a standard cell.
+
+Example: A signal takes 30 ps to pass through an inverter.
+
+
+12. What is net delay?
+Net delay is the time taken by a signal to travel through a wire between cells.
+
+It depends on:
+- Wire length.
+- Resistance.
+- Capacitance.
+- Load.
+Example: A long wire generally has more delay than a short wire.
+
+16. What is a setup violation?
+A setup violation occurs when data reaches the destination flip-flop too late.
+
+Data must arrive before the next active capture clock edge, with sufficient setup time.
+
+
+17. What is a hold violation?
+A hold violation occurs when data reaches the destination flip-flop too early.
+
+Data must remain stable for the required hold time after the capture clock edge.
+
+18. Why does setup violation occur?
+Common reasons:
+- Too many logic gates.
+- Long wire length.
+- High fanout.
+- High cell delay.
+- Large capacitive load.
+- Unfavourable clock skew.
+
+
+19. Why does hold violation occur?
+Common reasons:
+- Very short data path.
+- Very few logic gates.
+- Small cell delay.
+- Unfavourable clock skew.
+
+
+22. What happens if setup slack is negative?
+The data arrives later than the required time.
+
+The design fails setup timing at that path.
+
+
+23. What happens if hold slack is negative?
+The data arrives too early and violates the hold requirement.
+
+The design fails hold timing at that path.
+
+24. Can setup and hold violations occur on the same path?
+Yes.
+
+Setup and hold analyse maximum and minimum data delays respectively.
+
+A path can have problems with both, although the conditions and fixes differ.
+
+25. Why does setup depend on the clock period?
+Setup timing checks whether data reaches the destination before the next capture clock edge.
+
+Increasing the clock period generally provides more time for data to arrive.
+
+
+26. Why is hold independent of the clock period?
+Hold timing checks data stability around the same capture clock edge.
+
+It does not depend on the next clock cycle.
+
+
+29. What is the impact of inserting buffers on setup timing?
+Buffers increase data-path delay.
+
+Therefore, setup timing can become worse if buffers are inserted in a critical data path.
+
+However, repeaters can reduce long-net delay, so the actual impact depends on the situation.
+
+
+30. What is the impact of inserting buffers on hold timing?
+Buffers increase minimum data-path delay.
+
+Therefore, they can help fix hold violations.
+
+Remember: Buffers are commonly inserted to fix hold violations, but they must be checked for setup impact.
+
+
+33. What is the difference between positive and negative slack?
+Positive slack                                      	Negative slack
+Timing is met	                                      Timing is violated
+Data arrives within the required limit               	Data misses the required limit
+
+
+34. What is WNS?
+WNS means Worst Negative Slack.
+
+It represents the worst slack among the analysed timing paths.
+
+Example: If the worst setup slack is -0.25 ns, WNS is -0.25 ns.
+
+35. What is TNS?
+TNS means Total Negative Slack.
+
+It is the sum of negative slack values across violating endpoints, according to the report's counting rules.
+
+Example:
+Path	Slack
+Path 1	-0.10 ns
+Path 2	-0.20 ns
+Path 3	+0.05 ns
+
+TNS = -0.30 ns.
+
+
+36. What is Fmax?
+Fmax is the maximum operating clock frequency that the design can support while meeting timing constraints.
+F=1/T
+
+37. How do you calculate clock frequency from clock period?
+F=1/T
+
+
+Example:
+
+Clock period = 2 ns.
+F= 1/2
+F=500MHZ
+
+38. What is the difference between arrival time and required time?
+- Arrival time: When data actually reaches the endpoint.
+- Required time: The latest or earliest time data is allowed to arrive, depending on the check.
+
+
+39. What is data arrival time?
+It is the time taken by data to travel from the startpoint to the endpoint, including relevant clock-to-Q, cell and net delays.
+
+
+40. What is data required time?
+It is the time limit calculated by STA for data to arrive at the endpoint.
+
+
+41. What is clock skew?
+Clock skew is the difference in clock arrival times between the launch and capture flip-flops.
+
+42. What are positive skew and negative skew?
+- Positive skew: Capture clock arrives later than launch clock.
+- Negative skew: Capture clock arrives earlier than launch clock.
+
+46. What is clock uncertainty?
+Variation in clock pulses.Due to skew,jitter,margin
+
+48. What is the difference between skew and jitter?
+Clock skew                                               	Clock jitter
+Difference in clock arrival times at different points    	Variation in clock edge timing
+Related to clock distribution                            	Related to clock stability
+
+
+49. What is clock reconvergence?
+Clock reconvergence happens when clock paths split into different branches and later meet again at a common point.
+
+
+52. What is clock transition time?
+Clock transition time is the time taken by a clock signal to change from low to high or high to low.
+
+It is also called clock slew.
+
+
+54. What is CTS?
+CTS stands for Clock Tree Synthesis.
+
+It is the process of building a clock distribution network using clock buffers and inverters.
+
+
+55. Why do we balance clock trees?
+We balance clock trees to control clock skew and deliver the clock properly to all sequential elements.
+
+Benefits:
+- Reduces skew.
+- Improves setup and hold timing.
+- Provides reliable clock distribution.
+
+
+60. What is SDC?
+SDC stands for Synopsys Design Constraints.
+
+It defines timing requirements for the design.
+
+It includes:
+- Clock definitions.
+- Input delays.
+- Output delays.
+- Clock uncertainty.
+- False paths.
+- Multicycle paths.
+
+
+70. What happens if SDC constraints are incorrect?
+STA results become unreliable.
+
+Possible problems:
+- Incorrect timing closure.
+- Missing timing violations.
+- Unnecessary optimization.
+- Incorrect frequency estimation.
+
+
+71. What is OCV?
+OCV stands for On-Chip Variation.
+
+It accounts for variations in cell and interconnect delays across different parts of the same chip.
+
+Example: Two identical cells may have slightly different delays because of process and environmental variations.
+
+
+72. What is AOCV?
+AOCV stands for Advanced On-Chip Variation.
+
+It applies variation derates based on factors such as path depth and physical distance.
+
+
+73. What is POCV?
+POCV stands for Parametric On-Chip Variation.
+
+It uses statistical variation modelling to estimate timing variation.
+
+
+75. What is derating?
+Derating means increasing or decreasing cell or net delay to account for timing variation.
+
+
+76. What are early and late paths?
+- Early path: Uses minimum or early delay assumptions.
+- Late path: Uses maximum or late delay assumptions.
+For setup, we generally analyse late data and early capture clock conditions.
+
+For hold, we generally analyse early data and late capture clock conditions.
+
+77. What are PVT corners?
+PVT stands for:
+- Process.
+- Voltage.
+- Temperature.
+These conditions affect cell delay and circuit performance.
+
+Example: Slow process, low voltage and high temperature can produce a slow timing corner.
+
+
+78. What is an operating corner?
+An operating corner is a combination of conditions under which the design is analysed.
+
+It can include process, voltage, temperature and RC assumptions.
+
+79. What is an RC corner?
+An RC corner represents the resistance and capacitance assumptions used for interconnect timing analysis.
+
+Examples:
+- RC worst.
+- RC best.
+- Typical RC.
+
+80. Difference between setup and hold corners?
+- Setup is generally worst at slow cell and slow interconnect conditions.
+- Hold is generally worst at fast cell and fast interconnect conditions.
+Actual worst corners depend on the technology library, RC conditions and variation models.
+
+81. What is SI?
+SI stands for Signal Integrity.
+
+It refers to maintaining the quality and reliability of electrical signals during transmission.
+
+84. What is max transition violation?
+A max transition violation occurs when the signal transition time exceeds the maximum transition limit specified in the library or design constraints.
+
+
+85. What is max capacitance violation?
+A max capacitance violation occurs when the total load capacitance on a driver exceeds its maximum allowed capacitance.
+
+
+86. Which tool is commonly used for STA?
+Common STA tools include:
+- Synopsys PrimeTime.
+- Cadence Tempus.
+
+87. What is Synopsys PrimeTime?
+PrimeTime is a Static Timing Analysis tool used to analyse timing paths and verify whether a design meets timing requirements.
+
+It checks:
+- Setup violations.
+- Hold violations.
+- Slack.
+- Clock timing.
+- Timing constraints.
+- Signal integrity (with supported SI analysis).
+
+88. How do you read a timing report?
+A timing report generally contains:
+1. Startpoint.
+2. Endpoint.
+3. Path group.
+4. Path type (max or min).
+5. Cell delay.
+6. Net delay.
+7. Arrival time.
+8. Required time.
+9. Slack.
+
+98. What is the difference between pre-CTS and post-CTS timing?
+Pre-CTS                                                               	Post-CTS
+Before clock tree synthesis                                       	After clock tree synthesis
+Clock tree is not physically built                                  	Clock tree is physically built
+Ideal clock is commonly used                                            	Propagated clock is commonly used
+Actual clock skew is not available                              	Actual clock skew can be analysed
+
+
+99. What is the difference between placement timing and post-route timing?
+Placement timing	Post-route timing
+Analysed after placement	Analysed after routing
+Uses estimated interconnect parasitics	Uses extracted interconnect parasitics
+Wire delays are estimated	Wire delays are more accurate
+Timing can change after routing	Reflects routed interconnect effects
+
+
+100. Why can timing change after routing?
+Timing can change after routing because actual wire resistance and capacitance become available through parasitic extraction.
+
+Main reasons:
+- Long routing wires.
+- Increased wire capacitance.
+- Increased wire resistance.
+- Crosstalk.
+- Routing detours.
+- Coupling capacitance.
+
+Purpose	Command
+Report timing              	report_timing
+Setup paths         	report_timing -delay_type max
+Hold paths          	report_timing -delay_type min
+Report clocks       	report_clocks
+Check timing        	check_timing
+Report constraints   	report_constraint -all_violators
+Report reference clocks	report_clock
+Report operating conditions	report_operating_conditions
+
+
+
+
+
